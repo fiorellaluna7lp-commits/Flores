@@ -30,12 +30,22 @@ palette (fuchsia, jungle green, marigold, violet on a deep forest header).
 - Continent donut, distance scatter, GDP scatter (click any to zoom; pick a 2nd chart to compare
   side by side in a modal).
 - Top destination countries ranked list, tagged FTA/PTA.
+- **QR code** in the last grid slot — scan to open the live dashboard on a phone; the whole page
+  is mobile-responsive (cards stack, map and charts resize) so it works the same on a small screen.
 - **Fullscreen button** — uses the browser's Fullscreen API so the address bar and browser chrome
   are hidden while presenting.
 - **Nominal $ / Real (2024) $ toggle** — inflation-adjusts every KPI, chart and the map using
   U.S. CPI-U annual averages (BLS), rebased to 2024 dollars.
 
 Runs 100% client-side (Plotly.js via CDN, no backend) — works directly on GitHub Pages.
+
+### Data cleanup
+
+- Non-country Comtrade categories ("Areas, nes", "Free Zones", "Other Asia, nes",
+  "Br. Indian Ocean Terr.", "Netherlands Antilles (...2010)") are excluded from every chart, the
+  map, the rankings and the correlations — only real destination countries are counted.
+- Ukraine's distance to Ecuador was corrected to **11,500 km** (the source sheet had a truncated
+  "11.00" that parsed as 11 km).
 
 ### On the inflation adjustment
 

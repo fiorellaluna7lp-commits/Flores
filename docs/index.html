@@ -441,6 +441,14 @@ function renderDash(code){
         <div id="chart-gdp" class="zoomable" style="height:240px;" onclick="pickChart('gdp', this)"></div>
         <div class="zoom-hint">click to zoom / compare</div>
       </div>
+
+      <div class="card" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:10px;">
+        <h2 style="align-self:flex-start;"><span class="dot"></span>Open on your phone</h2>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=8&color=18-53-36&data=https%3A%2F%2Ffiorellaluna7lp-commits.github.io%2FFlores%2F"
+             alt="QR code to open this dashboard on mobile" width="150" height="150"
+             style="border-radius:10px; border:1px solid var(--line);">
+        <p class="desc" style="margin:0;">Scan to open <b style="color:var(--forest);">Bloom Atlas</b> on your phone — the dashboard is mobile-responsive, so every chart, filter and the map adapt to a smaller screen automatically.</p>
+      </div>
     </div>
   `;
 
