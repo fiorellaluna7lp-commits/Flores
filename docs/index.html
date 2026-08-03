@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecuador · Exportaciones de flores frescas 2008-2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+  :root{
+    --cream:#FBF7F0;
+    --ink:#1B2A20;
+    --green:#1F4E3D;
+    --green-light:#3E7A5F;
+    --rose:#C2485B;
+    --rose-soft:#E8B4BC;
+    --gold:#C99A3E;
+    --line:#D8D0C0;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    padding:56px 8vw 28px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  header .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--rose);
+    margin-bottom:14px;
+  }
+  header h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(32px,5vw,58px);
+    line-height:1.05;
+    margin:0 0 16px;
+    color:var(--green);
+    max-width:820px;
+  }
+  header p.sub{
+    max-width:620px;
+    font-size:16px;
+    line-height:1.6;
+    color:#4A4A42;
+    margin:0;
+  }
+  .stem{
+    position:absolute;
+    right:-40px;
+    top:0;
+    bottom:0;
+    width:260px;
+    opacity:.12;
+    pointer-events:none;
+  }
+  nav.tabs{
+    display:flex;
+    gap:4px;
+    padding:0 8vw;
+    margin-top:28px;
+    flex-wrap:wrap;
+  }
+  nav.tabs button{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    letter-spacing:.03em;
+    padding:11px 20px;
+    border:1px solid var(--line);
+    border-bottom:none;
+    background:var(--cream);
+    color:#6b6b60;
+    cursor:pointer;
+    border-radius:8px 8px 0 0;
+    transition:.15s;
+  }
+  nav.tabs button:hover{ color:var(--green); }
+  nav.tabs button.active{
+    background:var(--card);
+    color:var(--green);
+    font-weight:600;
+    border-color:var(--line);
+  }
+  main{
+    padding:0 8vw 80px;
+    background:var(--card);
+    border-top:1px solid var(--line);
+  }
+  .panel{ display:none; padding-top:40px; }
+  .panel.active{ display:block; }
+  .kpis{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-bottom:44px;
+  }
+  .kpi{
+    background:var(--card);
+    padding:22px 24px;
+  }
+  .kpi .label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:#8a8a7e;
+    margin-bottom:8px;
+  }
+  .kpi .value{
+    font-family:'Fraunces',serif;
+    font-size:28px;
+    font-weight:600;
+    color:var(--green);
+  }
+  .kpi .value.rose{ color:var(--rose); }
+  .kpi .note{ font-size:12px; color:#8a8a7e; margin-top:6px; line-height:1.4;}
+  .chart-block{ margin-bottom:56px; }
+  .chart-block h2{
+    font-family:'Fraunces',serif;
+    font-size:22px;
+    font-weight:600;
+    color:var(--green);
+    margin:0 0 4px;
+  }
+  .chart-block p.desc{
+    font-size:14px;
+    color:#6b6b60;
+    margin:0 0 18px;
+    max-width:680px;
+  }
+  .chart-wrap{
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:8px;
+  }
+  footer{
+    padding:32px 8vw 60px;
+    font-size:12px;
+    color:#8a8a7e;
+    font-family:'IBM Plex Mono',monospace;
+    line-height:1.7;
+    max-width:760px;
+  }
+  footer a{ color:var(--rose); }
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="stem" viewBox="0 0 200 600" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 600 C 90 450, 130 380, 100 300 C 70 220, 120 150, 100 0" stroke="#1F4E3D" stroke-width="3" fill="none"/>
+    <ellipse cx="100" cy="60" rx="34" ry="46" fill="#C2485B"/>
+  </svg>
+  <div class="eyebrow">Comtrade · Ecuador · HS 0603</div>
+  <h1>A quién le vendemos flores, y por qué</h1>
+  <p class="sub">Panel 2008-2024 de las tres partidas florícolas de exportación ecuatoriana — rosas (060311), claveles (060312) y otras flores frescas (060319) — para responder tres preguntas: ¿pesa el continente, la distancia, o el PIB del comprador?</p>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<main id="main"></main>
+
+<footer>
+  Fuente: base de datos Comtrade (vía Google Sheets del usuario), procesada con fórmulas nativas de Excel
+  (SUMIFS / VLOOKUP / CORREL) y verificada con LibreOffice headless. FTA/PTA por país-año según
+  SICE-OEA y Ministerio de Producción, Comercio Exterior e Inversiones de Ecuador. Los libros .xlsx
+  originales, con las fórmulas completas, están en <code>/excel</code> de este repositorio.
+</footer>
+
+<script>
+const CODE_ORDER = ["060311","060319","060312"];
+const COLORS = {
+  "North America": "#C2485B",
+  "South America": "#C99A3E",
+  "Europe": "#1F4E3D",
+  "Asia": "#3E7A5F",
+  "Africa": "#8a8a7e",
+  "Oceania": "#7F9CB5",
+  "Sin clasificar": "#D8D0C0"
+};
+const ES = {
+  "North America":"Norteamérica","South America":"Sudamérica","Europe":"Europa",
+  "Asia":"Asia","Africa":"África","Oceania":"Oceanía","Sin clasificar":"Sin clasificar"
+};
+
+fetch('data.json').then(r => r.json()).then(DATA => {
+  const tabsEl = document.getElementById('tabs');
+  const mainEl = document.getElementById('main');
+
+  CODE_ORDER.forEach((code, i) => {
+    const d = DATA[code];
+    const btn = document.createElement('button');
+    btn.textContent = `HS ${code} · ${d.label}`;
+    btn.className = i === 0 ? 'active' : '';
+    btn.onclick = () => selectTab(code);
+    tabsEl.appendChild(btn);
+
+    const panel = document.createElement('div');
+    panel.className = 'panel' + (i === 0 ? ' active' : '');
+    panel.id = 'panel-' + code;
+    panel.innerHTML = buildPanel(d);
+    mainEl.appendChild(panel);
+  });
+
+  CODE_ORDER.forEach(code => renderCharts(code, DATA[code]));
+
+  function selectTab(code){
+    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    [...tabsEl.children][CODE_ORDER.indexOf(code)].classList.add('active');
+    document.getElementById('panel-' + code).classList.add('active');
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  function fmtUSD(v){
+    if (v >= 1e9) return '$' + (v/1e9).toFixed(2) + 'B';
+    if (v >= 1e6) return '$' + (v/1e6).toFixed(1) + 'M';
+    if (v >= 1e3) return '$' + (v/1e3).toFixed(0) + 'K';
+    return '$' + v;
+  }
+
+  function buildPanel(d){
+    const total = d.countries.reduce((s,c)=> s + (c.value||0), 0);
+    const top = [...d.countries].sort((a,b)=>b.value-a.value)[0];
+    return `
+      <div class="kpis">
+        <div class="kpi">
+          <div class="label">Exportado 2008–2024</div>
+          <div class="value">${fmtUSD(total)}</div>
+          <div class="note">${d.countries.length} países destino</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Principal comprador</div>
+          <div class="value">${top.country}</div>
+          <div class="note">${fmtUSD(top.value)} acumulado</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Correlación vs. distancia</div>
+          <div class="value ${Math.abs(d.corr_distance) < 0.2 ? 'rose' : ''}">${d.corr_distance.toFixed(3)}</div>
+          <div class="note">${Math.abs(d.corr_distance) < 0.2 ? 'Casi nula — la cercanía no explica el volumen' : 'Relación detectable'}</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Correlación vs. PIB importador</div>
+          <div class="value">${d.corr_gdp.toFixed(3)}</div>
+          <div class="note">${d.corr_gdp > 0.5 ? 'Fuerte — el poder adquisitivo sí importa' : 'Moderada'}</div>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <h2>1 · Exportación por continente, año a año</h2>
+        <p class="desc">Barras apiladas, 2008-2024. Pasa el mouse para ver el detalle por continente y año.</p>
+        <div class="chart-wrap"><div id="chart-continent-${d._code}" style="height:460px;"></div></div>
+      </div>
+
+      <div class="chart-block">
+        <h2>2 · Valor exportado vs. distancia a Ecuador</h2>
+        <p class="desc">Cada punto es un país. Si la distancia importara, veríamos una pendiente clara — no la hay.</p>
+        <div class="chart-wrap"><div id="chart-distance-${d._code}" style="height:460px;"></div></div>
+      </div>
+
+      <div class="chart-block">
+        <h2>3 · Valor exportado vs. PIB del país importador</h2>
+        <p class="desc">Cada punto es un país. Aquí sí aparece una tendencia positiva clara.</p>
+        <div class="chart-wrap"><div id="chart-gdp-${d._code}" style="height:460px;"></div></div>
+      </div>
+    `;
+  }
+
+  function renderCharts(code, d){
+    d._code = code;
+    // re-render KPI block now that _code is set (buildPanel used it before assignment on first pass, so rebuild)
+    document.getElementById('panel-' + code).innerHTML = buildPanel(d);
+
+    const layoutBase = {
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)',
+      font: { family: 'Inter, sans-serif', color: '#1B2A20', size: 12 },
+      margin: { t: 10, r: 20, l: 60, b: 50 },
+      hoverlabel: { font: { family: 'IBM Plex Mono, monospace', size: 11 } }
+    };
+
+    // Chart 1: stacked bar by continent x year
+    const traces1 = d.continents.map(cont => ({
+      x: d.years,
+      y: d.series[cont],
+      name: ES[cont] || cont,
+      type: 'bar',
+      marker: { color: COLORS[cont] || '#999' },
+      hovertemplate: '%{x}<br>' + (ES[cont]||cont) + ': $%{y:,.0f}<extra></extra>'
+    }));
+    Plotly.newPlot('chart-continent-' + code, traces1, {
+      ...layoutBase,
+      barmode: 'stack',
+      legend: { orientation: 'h', y: -0.15 },
+      yaxis: { title: 'Valor exportado (US$)', tickformat: '$,.0s' },
+      xaxis: { title: 'Año', dtick: 1 }
+    }, { responsive: true, displayModeBar: false });
+
+    // Chart 2: scatter value vs distance
+    const validDist = d.countries.filter(c => c.distance != null && c.value != null && c.value > 0);
+    Plotly.newPlot('chart-distance-' + code, [{
+      x: validDist.map(c => c.distance),
+      y: validDist.map(c => c.value),
+      text: validDist.map(c => c.country),
+      mode: 'markers',
+      type: 'scatter',
+      marker: { color: '#C2485B', size: 9, opacity: 0.7, line: { width: 1, color: '#7a1f2b' } },
+      hovertemplate: '%{text}<br>Distancia: %{x:,.0f} km<br>Exportado: $%{y:,.0f}<extra></extra>'
+    }], {
+      ...layoutBase,
+      yaxis: { title: 'Valor exportado total (US$)', type: 'log', tickformat: '$,.0s' },
+      xaxis: { title: 'Distancia a Ecuador (km)' }
+    }, { responsive: true, displayModeBar: false });
+
+    // Chart 3: scatter value vs gdp
+    const validGdp = d.countries.filter(c => c.gdp != null && c.value != null && c.value > 0);
+    Plotly.newPlot('chart-gdp-' + code, [{
+      x: validGdp.map(c => c.gdp),
+      y: validGdp.map(c => c.value),
+      text: validGdp.map(c => c.country),
+      mode: 'markers',
+      type: 'scatter',
+      marker: { color: '#1F4E3D', size: 9, opacity: 0.7, line: { width: 1, color: '#0d251c' } },
+      hovertemplate: '%{text}<br>PIB: $%{x:,.0f}<br>Exportado: $%{y:,.0f}<extra></extra>'
+    }], {
+      ...layoutBase,
+      yaxis: { title: 'Valor exportado total (US$)', type: 'log', tickformat: '$,.0s' },
+      xaxis: { title: 'PIB del país importador (US$)', type: 'log', tickformat: '$,.0s' }
+    }, { responsive: true, displayModeBar: false });
+  }
+});
+</script>
+</body>
+</html>
