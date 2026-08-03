@@ -8,6 +8,23 @@ vigentes año a año.
 **[→ Ver el dashboard interactivo](https://fiorellaluna7lp-commits.github.io/Flores/)**
 *(se activa automaticamente 1-2 minutos despues de habilitar GitHub Pages — ver instrucciones abajo)*
 
+## El dashboard interactivo
+
+Página única (`docs/index.html`) con:
+
+- **Mapa mundial clicable** — toca cualquier país y se abre su ficha completa a la derecha:
+  valor exportado, distancia a Ecuador, PIB, si tiene FTA/PTA vigente (con la fuente/nota), y un
+  mini-gráfico de su evolución 2008-2024.
+- **Slider de año** — mueve el control para ver cómo cambia el mapa año a año, o déjalo en
+  "Total 2008-24" para ver el acumulado.
+- **3 pestañas de producto** — rosas / claveles / otras flores, cada una con su propio mapa,
+  KPIs y gráficos.
+- **3 gráficos por producto** — barras apiladas por continente-año, y dos dispersiones
+  (distancia y PIB) con escala logarítmica.
+
+Corre 100% en el navegador (Plotly.js vía CDN), sin backend — por eso funciona directo en
+GitHub Pages.
+
 ## Qué responde este análisis
 
 1. **¿Exportamos más según el continente del comprador?**
