@@ -11,7 +11,6 @@
   :root{
     --bg:#F3F1E9;
     --forest:#123524;
-    --forest-2:#1B4A34;
     --fuchsia:#E5177B;
     --fuchsia-dark:#B10F5E;
     --tropical:#159B57;
@@ -25,47 +24,77 @@
     --line:#E4E1D3;
   }
   *{box-sizing:border-box;}
+  html, body{ height:100%; margin:0; overflow:hidden; }
   body{
-    margin:0; background:var(--bg); color:var(--ink);
+    background:var(--bg); color:var(--ink);
     font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;
-    font-size:14px;
+    font-size:14px; display:flex; flex-direction:column;
   }
   .mono{ font-family:'IBM Plex Mono',monospace; }
 
   .topbar{
     background:var(--forest); color:#fff;
-    padding:16px 24px; display:flex; align-items:center; justify-content:space-between;
-    flex-wrap:wrap; gap:14px;
+    padding:14px 22px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px; flex-shrink:0;
     background-image: radial-gradient(circle at 8% 30%, rgba(229,23,123,0.18), transparent 45%),
                        radial-gradient(circle at 92% 70%, rgba(242,160,7,0.14), transparent 45%);
   }
-  .topbar .brand{ display:flex; align-items:center; gap:12px; }
+  .topbar .brand{ display:flex; align-items:center; gap:11px; }
   .brand .icon{
-    width:42px; height:42px; border-radius:50%;
+    width:40px; height:40px; border-radius:50%;
     background:conic-gradient(from 180deg, var(--fuchsia), var(--marigold), var(--tropical), var(--violet), var(--fuchsia));
-    display:flex; align-items:center; justify-content:center; font-size:19px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;
     box-shadow:0 0 0 3px rgba(255,255,255,0.12);
   }
   .brand h1{
-    font-size:20px; font-weight:800; margin:0; letter-spacing:.01em;
+    font-size:19px; font-weight:800; margin:0; letter-spacing:.01em;
     background:linear-gradient(90deg,#fff,#FCE4EF);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .brand p{ font-size:11.5px; margin:2px 0 0; color:#B9CBBC; }
+  .brand p{ font-size:11px; margin:2px 0 0; color:#B9CBBC; }
 
-  .filters{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .filters{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
   .fgroup{ display:flex; align-items:center; gap:6px; }
-  .fgroup .flabel{ font-size:10px; text-transform:uppercase; letter-spacing:.09em; color:#9FB6A5; margin-right:2px; }
+  .fgroup .flabel{ font-size:9.5px; text-transform:uppercase; letter-spacing:.09em; color:#9FB6A5; margin-right:2px; }
   .pill{
-    font-family:'Poppins',sans-serif; font-size:12.5px; font-weight:500;
-    padding:7px 15px; border-radius:18px; border:1px solid rgba(255,255,255,0.18);
+    font-family:'Poppins',sans-serif; font-size:12px; font-weight:500;
+    padding:6px 14px; border-radius:18px; border:1px solid rgba(255,255,255,0.18);
     background:rgba(255,255,255,0.07); color:#EDEFE9; cursor:pointer; transition:.15s;
   }
   .pill:hover{ background:rgba(255,255,255,0.16); }
   .pill.active{ background:var(--fuchsia); color:#fff; border-color:var(--fuchsia); }
   .pill.toggle.active{ background:var(--tropical); border-color:var(--tropical); }
+  .icon-btn{
+    background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff;
+    border-radius:10px; padding:8px 12px; cursor:pointer; font-size:13px; font-family:'Poppins',sans-serif;
+    display:flex; align-items:center; gap:6px; transition:.15s;
+  }
+  .icon-btn:hover{ background:rgba(255,255,255,0.2); }
 
-  .dash{ padding:16px 20px 24px; max-width:1680px; margin:0 auto; }
+  .hscroll{
+    flex:1; display:flex; overflow-x:auto; overflow-y:hidden;
+    scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  }
+  .hscroll::-webkit-scrollbar{ height:8px; }
+  .hscroll::-webkit-scrollbar-thumb{ background:#CBC6AE; border-radius:8px; }
+  .page{
+    min-width:100vw; flex:0 0 100vw; scroll-snap-align:start;
+    overflow-y:auto; padding:16px 22px 26px; box-sizing:border-box; height:100%;
+  }
+  .page-head{ display:flex; align-items:baseline; gap:10px; margin-bottom:12px; }
+  .page-head h2{ font-size:17px; font-weight:800; color:var(--forest); margin:0; }
+  .page-head .step{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--muted); }
+
+  .dots{ position:fixed; right:20px; bottom:20px; display:flex; flex-direction:column; gap:8px; z-index:50; }
+  .dots button{ width:11px; height:11px; border-radius:50%; border:2px solid var(--forest); background:transparent; cursor:pointer; padding:0; }
+  .dots button.active{ background:var(--fuchsia); border-color:var(--fuchsia); }
+  .nav-arrow{
+    position:fixed; top:50%; transform:translateY(-50%); z-index:50;
+    background:rgba(18,53,36,0.85); color:#fff; border:none; width:38px; height:56px;
+    cursor:pointer; font-size:18px; border-radius:8px;
+  }
+  .nav-arrow.left{ left:8px; } .nav-arrow.right{ right:8px; }
+  .nav-arrow:hover{ background:var(--fuchsia); }
 
   .kpi-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:14px; }
   .kpi-card{
@@ -76,31 +105,38 @@
   .kpi-card:nth-child(2){ border-left-color:var(--tropical); }
   .kpi-card:nth-child(3){ border-left-color:var(--sky); }
   .kpi-card:nth-child(4){ border-left-color:var(--marigold); }
-  .kpi-ring{ width:60px; height:60px; flex-shrink:0; }
+  .kpi-ring{ width:58px; height:58px; flex-shrink:0; }
   .kpi-text .label{ font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:3px; }
-  .kpi-text .big{ font-size:20px; font-weight:700; color:var(--forest); line-height:1.15; display:flex; align-items:center; gap:6px; }
+  .kpi-text .big{ font-size:19px; font-weight:700; color:var(--forest); line-height:1.15; display:flex; align-items:center; gap:6px; }
   .kpi-text .sub{ font-size:11px; color:var(--muted); margin-top:2px; }
   .trend-up{ color:var(--tropical-dark); font-size:12px; font-weight:700; }
   .trend-down{ color:var(--fuchsia-dark); font-size:12px; font-weight:700; }
 
-  /* Big map row */
-  .map-row{
-    background:var(--card); border-radius:16px; padding:16px 18px; margin-bottom:14px;
-    box-shadow:0 2px 8px rgba(18,53,36,0.08);
-  }
+  .map-row{ background:var(--card); border-radius:16px; padding:16px 18px; box-shadow:0 2px 8px rgba(18,53,36,0.08); }
   .map-row h2{ font-size:15px; font-weight:700; color:var(--forest); margin:0 0 2px; display:flex; align-items:center; gap:7px; }
   .map-row h2 .dot{ width:8px; height:8px; border-radius:50%; background:var(--fuchsia); display:inline-block; }
   .map-row p.desc{ font-size:12px; color:var(--muted); margin:0 0 10px; }
-  .slider-row{ display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+
+  .map-controls{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:10px; }
+  .map-controls .ctrl-group{ display:flex; align-items:center; gap:8px; }
+  .map-controls .clabel{ font-size:10px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
+  .chip{
+    font-size:11.5px; font-weight:500; padding:5px 12px; border-radius:14px;
+    border:1px solid var(--line); background:var(--bg); color:var(--ink); cursor:pointer; transition:.15s;
+  }
+  .chip:hover{ border-color:var(--fuchsia); }
+  .chip.active{ background:var(--forest); color:#fff; border-color:var(--forest); }
+  .yr-nav-btn{ background:var(--bg); border:1px solid var(--line); border-radius:8px; width:28px; height:28px; cursor:pointer; font-size:13px; color:var(--forest); }
+  .yr-nav-btn:hover{ background:var(--fuchsia); color:#fff; }
+  select.yr-select{ font-family:'IBM Plex Mono',monospace; font-size:12px; border:1px solid var(--line); border-radius:8px; padding:5px 8px; color:var(--forest); background:#fff; }
+  .slider-row{ display:flex; align-items:center; gap:10px; }
   .slider-row .yr{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--fuchsia-dark); font-weight:700; min-width:82px; }
   .slider-row input[type=range]{ flex:1; accent-color:var(--fuchsia); height:5px; }
-  .map-body{ display:grid; grid-template-columns:1fr 260px; gap:14px; }
-  #map-holder{ height:560px; border-radius:10px; overflow:hidden; cursor:pointer; }
-  .detail-mini{
-    background:var(--bg); border-radius:12px; padding:14px; font-size:12.5px;
-    display:flex; flex-direction:column; height:560px; overflow-y:auto;
-  }
-  .detail-mini .placeholder{ color:var(--muted); line-height:1.6; }
+
+  .map-body{ display:grid; grid-template-columns:1fr 260px; gap:14px; margin-top:10px; }
+  #map-holder{ height:480px; border-radius:10px; overflow:hidden; }
+  .detail-mini{ background:var(--bg); border-radius:12px; padding:14px; font-size:12.5px; display:flex; flex-direction:column; height:480px; overflow-y:auto; }
+  .detail-mini .placeholder{ color:var(--muted); line-height:1.6; text-align:center; margin-top:40%; }
   .detail-mini h3{ font-size:17px; margin:0 0 2px; color:var(--forest); }
   .detail-mini .ctag{ font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
   .drow{ display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px dashed var(--line); }
@@ -111,45 +147,41 @@
   .badge.pta{ background:var(--marigold); color:#fff; }
   .badge.none{ background:#E4E1D3; color:var(--muted); }
 
-  /* Chart grid below */
-  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-  @media (max-width:1050px){ .grid{ grid-template-columns:1fr 1fr; } .map-body{ grid-template-columns:1fr; } #map-holder{height:420px;} .detail-mini{height:auto;} }
-  @media (max-width:640px){ .grid{ grid-template-columns:1fr; } .kpi-row{ grid-template-columns:1fr 1fr; } }
+  .two-col{ display:grid; grid-template-columns:1.5fr 1fr; gap:16px; }
+  @media (max-width:900px){ .two-col{ grid-template-columns:1fr; } .map-body{ grid-template-columns:1fr; } }
 
-  .card{
-    background:var(--card); border-radius:14px; padding:15px 17px;
-    box-shadow:0 2px 8px rgba(18,53,36,0.08);
-  }
-  .card h2{ font-size:13.5px; font-weight:700; color:var(--forest); margin:0 0 3px; display:flex; align-items:center; gap:7px; }
+  .card{ background:var(--card); border-radius:14px; padding:16px 18px; box-shadow:0 2px 8px rgba(18,53,36,0.08); }
+  .card h2{ font-size:14px; font-weight:700; color:var(--forest); margin:0 0 3px; display:flex; align-items:center; gap:7px; }
   .card h2 .dot{ width:7px; height:7px; border-radius:50%; background:var(--fuchsia); display:inline-block; }
-  .card p.desc{ font-size:11.5px; color:var(--muted); margin:0 0 8px; }
+  .card p.desc{ font-size:12px; color:var(--muted); margin:0 0 10px; }
 
-  .info-body{ display:flex; gap:14px; align-items:center; }
-  .info-img{ width:100px; height:100px; flex-shrink:0; }
-  .info-text{ font-size:12px; line-height:1.55; color:#33402F; }
+  .info-body{ display:flex; gap:16px; align-items:center; }
+  .info-img{ width:120px; height:120px; flex-shrink:0; }
+  .info-text{ font-size:13px; line-height:1.6; color:#33402F; }
   .info-text b{ color:var(--forest); }
 
-  .rank-list{ max-height:220px; overflow-y:auto; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px; }
+  @media (max-width:1050px){ .grid3{ grid-template-columns:1fr 1fr; } }
+
+  .rank-list{ max-height:250px; overflow-y:auto; }
   .rank-item{ display:flex; align-items:center; gap:7px; padding:6px 0; border-bottom:1px solid var(--line); font-size:12px; }
   .rank-item .name{ flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .rank-item .bar-bg{ width:64px; height:7px; background:var(--line); border-radius:4px; overflow:hidden; }
   .rank-item .bar-fill{ height:100%; background:var(--fuchsia); }
   .rank-item .val{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--forest); width:52px; text-align:right; }
 
-  .zoomable{ cursor:zoom-in; position:relative; border-radius:8px; transition:.15s; }
+  .agreement-list{ max-height:250px; overflow-y:auto; }
+  .agreement-item{ display:flex; align-items:center; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--line); font-size:12px; }
+  .agreement-item .note{ font-size:9.5px; color:var(--muted); max-width:220px; text-align:right; }
+
+  .zoomable{ cursor:zoom-in; border-radius:8px; transition:.15s; }
   .zoomable:hover{ outline:2px solid var(--fuchsia); outline-offset:2px; }
   .zoomable.picked{ outline:2px solid var(--tropical); outline-offset:2px; background:rgba(21,155,87,0.06); }
   .zoom-hint{ font-size:9.5px; color:var(--muted); text-align:right; margin-top:2px; font-family:'IBM Plex Mono',monospace; }
 
-  /* Compare overlay card */
-  .compare-card{ grid-column:1 / -1; }
-  .compare-card .row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
-
-  /* Modal */
   .modal-bg{
     display:none; position:fixed; inset:0; background:rgba(18,53,36,0.55);
-    z-index:100; align-items:center; justify-content:center; padding:30px;
-    backdrop-filter:blur(2px);
+    z-index:200; align-items:center; justify-content:center; padding:30px; backdrop-filter:blur(2px);
   }
   .modal-bg.open{ display:flex; }
   .modal{
@@ -158,12 +190,10 @@
   }
   .modal .mtop{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
   .modal .mtop h3{ font-size:16px; color:var(--forest); margin:0; }
-  .modal .mclose{ background:var(--forest); color:#fff; border:none; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:12.5px; font-family:'Poppins',sans-serif; }
+  .modal .mclose{ background:var(--forest); color:#fff; border:none; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:12.5px; }
   .modal-charts{ display:grid; grid-template-columns:1fr; gap:16px; }
   .modal-charts.two{ grid-template-columns:1fr 1fr; }
   .modal-hint{ font-size:11.5px; color:var(--muted); margin-bottom:10px; }
-
-  footer{ padding:18px 20px 32px; font-size:10.5px; color:var(--muted); max-width:1680px; margin:0 auto; line-height:1.7; }
 </style>
 </head>
 <body>
@@ -179,10 +209,108 @@
   <div class="filters">
     <div class="fgroup"><span class="flabel">Product</span><span id="filters-product"></span></div>
     <div class="fgroup"><span class="flabel">Values</span><span id="filters-value"></span></div>
+    <button class="icon-btn" onclick="toggleFullscreen()" id="fs-btn">⛶ Fullscreen</button>
   </div>
 </div>
 
-<div class="dash" id="dash"></div>
+<div class="hscroll" id="hscroll">
+  <div class="page" id="page-0">
+    <div class="page-head"><h2>Overview &amp; World Map</h2><span class="step">1 / 3 · scroll or wheel-scroll right for more</span></div>
+    <div id="kpi-slot"></div>
+    <div class="map-row">
+      <h2><span class="dot"></span>Interactive World Map</h2>
+      <p class="desc">Click any country for its full profile. Filter by trade-agreement status, or isolate a single year.</p>
+      <div class="map-controls">
+        <div class="ctrl-group">
+          <span class="clabel">Agreement</span>
+          <button class="chip active" data-agr="all" onclick="setAgreementFilter('all')">All countries</button>
+          <button class="chip" data-agr="fta" onclick="setAgreementFilter('fta')">FTA only</button>
+          <button class="chip" data-agr="pta" onclick="setAgreementFilter('pta')">PTA only</button>
+          <button class="chip" data-agr="none" onclick="setAgreementFilter('none')">No agreement</button>
+        </div>
+        <div class="ctrl-group">
+          <span class="clabel">Isolate year</span>
+          <button class="yr-nav-btn" onclick="stepYear(-1)">‹</button>
+          <select class="yr-select" id="yr-select"></select>
+          <button class="yr-nav-btn" onclick="stepYear(1)">›</button>
+          <button class="chip" onclick="setYearIdx(0)">Total 08–24</button>
+        </div>
+      </div>
+      <div class="slider-row">
+        <span class="yr mono" id="yr-label">Total 08–24</span>
+        <input type="range" id="yr-slider" min="0" max="16" value="0" step="1">
+      </div>
+      <div class="map-body">
+        <div id="map-holder"></div>
+        <div class="detail-mini" id="detail-mini">
+          <div class="placeholder">Click a country on the map to see its export value, distance, GDP, FTA/PTA status and 2008–2024 trend here.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-1">
+    <div class="page-head"><h2>Trends &amp; Product Profile</h2><span class="step">2 / 3</span></div>
+    <div class="two-col">
+      <div class="card">
+        <h2><span class="dot"></span>Total Purchases, 2008–2024 — All 3 Products Compared</h2>
+        <p class="desc">Yearly export value timeline: roses vs. carnations vs. other flowers. The active product is highlighted.</p>
+        <div id="chart-timeline" style="height:420px;"></div>
+      </div>
+      <div class="card">
+        <h2><span class="dot"></span>What is this product?</h2>
+        <div class="info-body" id="info-body"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-2">
+    <div class="page-head"><h2>Deep Dive</h2><span class="step">3 / 3</span></div>
+    <div class="grid3">
+      <div class="card">
+        <h2><span class="dot"></span>Exports by Continent</h2>
+        <p class="desc">Share of total value, 2008–2024. Click to zoom.</p>
+        <div id="chart-continent" class="zoomable" style="height:220px;" onclick="pickChart('continent', this)"></div>
+        <div class="zoom-hint">click to zoom / compare</div>
+      </div>
+      <div class="card">
+        <h2><span class="dot"></span>Value vs. Distance</h2>
+        <p class="desc">No clear slope = distance doesn't drive volume. Click to zoom.</p>
+        <div id="chart-distance" class="zoomable" style="height:220px;" onclick="pickChart('distance', this)"></div>
+        <div class="zoom-hint">click to zoom / compare</div>
+      </div>
+      <div class="card">
+        <h2><span class="dot"></span>Value vs. Importer GDP</h2>
+        <p class="desc">A clear upward trend appears here. Click to zoom.</p>
+        <div id="chart-gdp" class="zoomable" style="height:220px;" onclick="pickChart('gdp', this)"></div>
+        <div class="zoom-hint">click to zoom / compare</div>
+      </div>
+      <div class="card">
+        <h2><span class="dot"></span>Top Destination Countries</h2>
+        <p class="desc">Ranked by total value exported.</p>
+        <div class="rank-list" id="rank-list"></div>
+      </div>
+      <div class="card">
+        <h2><span class="dot"></span>Countries with FTA active</h2>
+        <p class="desc">Free Trade Agreement in force today.</p>
+        <div class="agreement-list" id="fta-list"></div>
+      </div>
+      <div class="card">
+        <h2><span class="dot"></span>Countries with PTA active</h2>
+        <p class="desc">Partial-scope preferential agreement in force today.</p>
+        <div class="agreement-list" id="pta-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="nav-arrow left" onclick="gotoPage(currentPage-1)">‹</button>
+<button class="nav-arrow right" onclick="gotoPage(currentPage+1)">›</button>
+<div class="dots" id="dots">
+  <button class="active" onclick="gotoPage(0)"></button>
+  <button onclick="gotoPage(1)"></button>
+  <button onclick="gotoPage(2)"></button>
+</div>
 
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
@@ -194,14 +322,6 @@
     <div class="modal-charts" id="modal-charts"></div>
   </div>
 </div>
-
-<footer>
-  Source: UN Comtrade (via the user's Google Sheet), processed with native Excel formulas
-  (SUMIFS / VLOOKUP / CORREL), verified with headless LibreOffice. FTA/PTA status per country-year
-  from SICE-OAS and Ecuador's Ministry of Production, Foreign Trade and Investment. Inflation
-  adjustment uses U.S. CPI-U annual averages (BLS), rebased to 2024 dollars. Full-formula .xlsx
-  workbooks are in <code>/excel</code> of this repository.
-</footer>
 
 <script>
 const CODE_ORDER = ["060311","060319","060312"];
@@ -235,7 +355,10 @@ const PRODUCT_INFO = {
 };
 
 let DATA = null, META = null, ACTIVE_CODE = null, USE_REAL = false;
-let PICKED = []; // for chart compare/zoom
+let PICKED = [];
+let AGR_FILTER = 'all';
+let YEAR_IDX = 0;
+let currentPage = 0;
 
 fetch('data.json').then(r => r.json()).then(d => {
   META = d._meta; delete d._meta;
@@ -258,6 +381,7 @@ fetch('data.json').then(r => r.json()).then(d => {
   vf.appendChild(bNom); vf.appendChild(bReal);
 
   selectProduct(CODE_ORDER[0]);
+  setupHScroll();
 });
 
 function fmtUSD(v){
@@ -295,42 +419,47 @@ function ring(elId, pct, color){
 }
 
 function selectProduct(code){
-  ACTIVE_CODE = code;
-  PICKED = [];
+  ACTIVE_CODE = code; PICKED = []; AGR_FILTER = 'all'; YEAR_IDX = 0;
   document.querySelectorAll('#filters-product .pill').forEach((b,i) => b.classList.toggle('active', CODE_ORDER[i]===code));
-  renderDash(code);
+  document.querySelectorAll('.chip[data-agr]').forEach(b => b.classList.toggle('active', b.dataset.agr==='all'));
+  renderAll(code);
 }
 function selectValueMode(real){
-  USE_REAL = real;
-  PICKED = [];
+  USE_REAL = real; PICKED = [];
   const btns = document.querySelectorAll('#filters-value .pill');
   btns[0].classList.toggle('active', !real);
   btns[1].classList.toggle('active', real);
-  renderDash(ACTIVE_CODE);
+  renderAll(ACTIVE_CODE);
+}
+function setAgreementFilter(f){
+  AGR_FILTER = f;
+  document.querySelectorAll('.chip[data-agr]').forEach(b => b.classList.toggle('active', b.dataset.agr===f));
+  drawMap();
 }
 
-function renderDash(code){
+function renderAll(code){
   const d = DATA[code];
+  renderKpis(d);
+  renderMapPage(d);
+  renderTrendsPage(code, d);
+  renderDeepDive(code, d);
+}
+
+function renderKpis(d){
   const total = d.countries.reduce((s,c)=> s + (valOf(c)||0), 0);
   const top = [...d.countries].sort((a,b)=>valOf(b)-valOf(a))[0];
   const topShare = Math.round(100*valOf(top)/total);
   const cd = corrDist(d), cg = corrGdp(d);
   const distPct = Math.round(Math.abs(cd)*100);
   const gdpPct = Math.round(Math.abs(cg)*100);
-  const info = PRODUCT_INFO[code];
   const valLabel = USE_REAL ? `${META.cpi_base_year} real $` : 'nominal $';
-
-  // growth trend: first 3 yrs avg vs last 3 yrs avg
   const byYear = totalByYear(d);
   const early = byYear.slice(0,3).reduce((s,v)=>s+v,0)/3;
   const late = byYear.slice(-3).reduce((s,v)=>s+v,0)/3;
   const growth = early>0 ? Math.round(100*(late-early)/early) : 0;
-  const trendHtml = growth >= 0
-    ? `<span class="trend-up">▲ ${growth}%</span>`
-    : `<span class="trend-down">▼ ${Math.abs(growth)}%</span>`;
+  const trendHtml = growth >= 0 ? `<span class="trend-up">▲ ${growth}%</span>` : `<span class="trend-down">▼ ${Math.abs(growth)}%</span>`;
 
-  const dash = document.getElementById('dash');
-  dash.innerHTML = `
+  document.getElementById('kpi-slot').innerHTML = `
     <div class="kpi-row">
       <div class="kpi-card"><div class="kpi-ring" id="ring-total"></div>
         <div class="kpi-text"><div class="label">Total Exported (${valLabel})</div><div class="big">${fmtUSD(total)} ${trendHtml}</div><div class="sub">${d.countries.length} destination countries · vs. first 3yr avg</div></div></div>
@@ -340,96 +469,124 @@ function renderDash(code){
         <div class="kpi-text"><div class="label">Distance Correlation</div><div class="big">${cd.toFixed(2)}</div><div class="sub">${distPct<20?'Distance barely matters':'Some relationship'}</div></div></div>
       <div class="kpi-card"><div class="kpi-ring" id="ring-gdp"></div>
         <div class="kpi-text"><div class="label">GDP Correlation</div><div class="big">${cg.toFixed(2)}</div><div class="sub">${gdpPct>50?'Buying power drives volume':'Moderate relationship'}</div></div></div>
-    </div>
-
-    <div class="map-row">
-      <h2><span class="dot"></span>Interactive World Map</h2>
-      <p class="desc">Click any country for its full profile. Drag the slider to animate by year.</p>
-      <div class="slider-row">
-        <span class="yr mono" id="yr-label">Total 08–24</span>
-        <input type="range" id="yr-slider" min="0" max="${d.years.length}" value="0" step="1">
-      </div>
-      <div class="map-body">
-        <div id="map-holder"></div>
-        <div class="detail-mini" id="detail-mini">
-          <div class="placeholder">👆 Click a country on the map to see its export value, distance, GDP, FTA/PTA status and 2008–2024 trend here.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h2><span class="dot"></span>What is this product?</h2>
-        <div class="info-body">
-          <div class="info-img">${info.img}</div>
-          <div class="info-text"><b>${info.title}</b><br>${info.text}</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2><span class="dot"></span>Total Purchases 2008–2024</h2>
-        <p class="desc">Share of total value by country (${valLabel}). Click to zoom.</p>
-        <div id="chart-pie" class="zoomable" style="height:210px;" onclick="pickChart('pie', this)"></div>
-        <div class="zoom-hint">🔍 click to zoom / compare</div>
-      </div>
-
-      <div class="card">
-        <h2><span class="dot"></span>Exports by Continent</h2>
-        <p class="desc">Share of total value, 2008–2024. Click to zoom.</p>
-        <div id="chart-continent" class="zoomable" style="height:210px;" onclick="pickChart('continent', this)"></div>
-        <div class="zoom-hint">🔍 click to zoom / compare</div>
-      </div>
-
-      <div class="card">
-        <h2><span class="dot"></span>Top Destination Countries</h2>
-        <p class="desc">Ranked by total value exported.</p>
-        <div class="rank-list" id="rank-list"></div>
-      </div>
-
-      <div class="card">
-        <h2><span class="dot"></span>Value vs. Distance</h2>
-        <p class="desc">No clear slope = distance doesn't drive volume. Click to zoom.</p>
-        <div id="chart-distance" class="zoomable" style="height:200px;" onclick="pickChart('distance', this)"></div>
-        <div class="zoom-hint">🔍 click to zoom / compare</div>
-      </div>
-
-      <div class="card">
-        <h2><span class="dot"></span>Value vs. Importer GDP</h2>
-        <p class="desc">A clear upward trend appears here. Click to zoom.</p>
-        <div id="chart-gdp" class="zoomable" style="height:200px;" onclick="pickChart('gdp', this)"></div>
-        <div class="zoom-hint">🔍 click to zoom / compare</div>
-      </div>
-
-      <div class="card compare-card">
-        <div class="row">
-          <div>
-            <h2><span class="dot"></span>Compare All 3 Products — Yearly Trend</h2>
-            <p class="desc">Roses vs. carnations vs. other flowers, side by side across the full period.</p>
-          </div>
-        </div>
-        <div id="chart-compare" style="height:260px;"></div>
-      </div>
-    </div>
-  `;
-
+    </div>`;
   ring('ring-total', 100, '#E5177B');
   ring('ring-top', topShare, '#159B57');
   ring('ring-dist', Math.max(distPct,4), '#1791C8');
   ring('ring-gdp', Math.max(gdpPct,4), '#F2A007');
+}
 
-  const rankEl = document.getElementById('rank-list');
-  const ranked = [...d.countries].sort((a,b)=>valOf(b)-valOf(a)).slice(0,12);
-  const maxV = valOf(ranked[0]);
-  rankEl.innerHTML = ranked.map(c => `
-    <div class="rank-item">
-      <span class="name">${c.country}</span>
-      <span class="bar-bg"><span class="bar-fill" style="width:${Math.round(100*valOf(c)/maxV)}%"></span></span>
-      <span class="val">${fmtUSD(valOf(c))}</span>
-    </div>`).join('');
+function renderMapPage(d){
+  const slider = document.getElementById('yr-slider');
+  slider.max = d.years.length;
+  slider.value = YEAR_IDX;
+  const sel = document.getElementById('yr-select');
+  sel.innerHTML = '<option value="0">Total 2008–2024</option>' + d.years.map((y,i)=>`<option value="${i+1}">${y}</option>`).join('');
+  sel.value = YEAR_IDX;
+  sel.onchange = () => setYearIdx(parseInt(sel.value,10));
+  slider.oninput = () => setYearIdx(parseInt(slider.value,10));
+  document.getElementById('yr-label').textContent = YEAR_IDX===0 ? 'Total 08–24' : d.years[YEAR_IDX-1];
+  document.getElementById('detail-mini').innerHTML = '<div class="placeholder">Click a country on the map to see its export value, distance, GDP, FTA/PTA status and 2008–2024 trend here.</div>';
+  drawMap();
+}
+function setYearIdx(idx){
+  const d = DATA[ACTIVE_CODE];
+  YEAR_IDX = Math.max(0, Math.min(d.years.length, idx));
+  document.getElementById('yr-slider').value = YEAR_IDX;
+  document.getElementById('yr-select').value = YEAR_IDX;
+  document.getElementById('yr-label').textContent = YEAR_IDX===0 ? 'Total 08–24' : d.years[YEAR_IDX-1];
+  drawMap();
+}
+function stepYear(delta){ setYearIdx(YEAR_IDX + delta); }
 
-  drawAllCharts(code, d, false);
-  drawCompare();
-  initMap(code, d);
+function agreementStatus(c, yearIdx){
+  if (yearIdx === 0) return { fta: c.fta, pta: c.pta };
+  return { fta: c.fta_series[yearIdx-1], pta: c.pta_series[yearIdx-1] };
+}
+function drawMap(){
+  const d = DATA[ACTIVE_CODE];
+  let mapCountries = d.countries.filter(c => c.iso3);
+  if (AGR_FILTER !== 'all'){
+    mapCountries = mapCountries.filter(c => {
+      const st = agreementStatus(c, YEAR_IDX);
+      if (AGR_FILTER === 'fta') return st.fta === 1;
+      if (AGR_FILTER === 'pta') return st.pta === 1;
+      if (AGR_FILTER === 'none') return st.fta !== 1 && st.pta !== 1;
+      return true;
+    });
+  }
+  const vals = mapCountries.map(c => YEAR_IDX===0 ? (valOf(c)||0) : (seriesOf(c)[YEAR_IDX-1]||0));
+  const logVals = vals.map(v => v>0 ? Math.log10(v) : null);
+  Plotly.newPlot('map-holder', [{
+    type:'choropleth',
+    locations: mapCountries.map(c=>c.iso3),
+    z: logVals,
+    text: mapCountries.map((c,i)=> c.country+' — '+fmtUSD(vals[i])),
+    customdata: mapCountries.map(c=>c.iso3),
+    hovertemplate:'%{text}<extra></extra>',
+    colorscale:[[0,'#F3F1E9'],[0.3,'#F9C7DD'],[0.6,'#E5177B'],[1,'#0E6E3E']],
+    showscale:false, marker:{ line:{ color:'#fff', width:0.5 } }
+  }], {
+    ...layoutBase(true), margin:{t:0,r:0,l:0,b:0},
+    geo:{ showframe:false, showcoastlines:false, projection:{type:'natural earth'},
+          bgcolor:'rgba(0,0,0,0)', landcolor:'#F3F1E9', showocean:true, oceancolor:'#FFFFFF',
+          showcountries:true, countrycolor:'#FFFFFF' }
+  }, { responsive:true, displayModeBar:false });
+
+  document.getElementById('map-holder').on('plotly_click', (ev) => {
+    const iso3 = ev.points[0].customdata;
+    const c = d.countries.find(x => x.iso3===iso3);
+    if (c) showDetail(c, d);
+  });
+}
+function showDetail(c, d){
+  const el = document.getElementById('detail-mini');
+  const st = agreementStatus(c, YEAR_IDX);
+  const badge = st.fta ? '<span class="badge fta">FTA active</span>' :
+                st.pta ? '<span class="badge pta">PTA active</span>' :
+                '<span class="badge none">No FTA/PTA</span>';
+  const tariffTxt = (c.tariff==null) ? '—' : c.tariff.toFixed(1)+'%';
+  el.innerHTML = `
+    <h3>${c.country}</h3>
+    <div class="ctag">${EN[c.continent]||c.continent}</div>
+    ${badge}
+    <div class="drow"><span class="k">Total exported 08–24</span><span class="v">${fmtUSD(valOf(c))}</span></div>
+    <div class="drow"><span class="k">Distance</span><span class="v">${c.distance? c.distance.toLocaleString('en')+' km':'—'}</span></div>
+    <div class="drow"><span class="k">GDP (latest)</span><span class="v">${fmtUSD(c.gdp)}</span></div>
+    <div class="drow"><span class="k">Tariff today</span><span class="v">${tariffTxt}</span></div>
+    <div id="mini-trend" style="height:120px;margin-top:8px;"></div>
+  `;
+  Plotly.newPlot('mini-trend', [{
+    x: d.years, y: seriesOf(c), type:'scatter', mode:'lines+markers',
+    line:{ color:'#E5177B', width:2 }, marker:{ size:3, color:'#159B57' },
+    fill:'tozeroy', fillcolor:'rgba(229,23,123,0.12)',
+    hovertemplate:'%{x}: $%{y:,.0f}<extra></extra>'
+  }], { ...layoutBase(false), margin:{t:4,r:4,l:40,b:20}, yaxis:{ tickformat:'$,.0s' }, xaxis:{ dtick:6 } },
+    { responsive:true, displayModeBar:false });
+}
+
+function renderTrendsPage(code, d){
+  const info = PRODUCT_INFO[code];
+  document.getElementById('info-body').innerHTML = `
+    <div class="info-img">${info.img}</div>
+    <div class="info-text"><b style="font-size:15px;">${info.title}</b><br>${info.text}</div>
+  `;
+  const traces = CODE_ORDER.map(c => {
+    const dd = DATA[c];
+    return {
+      x: dd.years, y: totalByYear(dd), name: LABEL_EN[dd.label]||dd.label, type:'scatter', mode:'lines+markers',
+      line:{ color: PRODUCT_COLOR[c], width: c===code?4:2, shape:'spline' },
+      opacity: c===code?1:0.5,
+      marker:{ size: c===code?7:4 },
+      fill: c===code ? 'tozeroy' : 'none',
+      fillcolor: c===code ? PRODUCT_COLOR[c]+'22' : undefined,
+      hovertemplate:'%{x}: $%{y:,.0f}<extra></extra>'
+    };
+  });
+  Plotly.newPlot('chart-timeline', traces, {
+    ...layoutBase(true), legend:{orientation:'h', y:-0.15, font:{size:12}},
+    yaxis:{ title:'Exported (US$)', tickformat:'$,.0s' }, xaxis:{ title:'Year', dtick:2 }
+  }, { responsive:true, displayModeBar:false });
 }
 
 function pieTrace(d, big){
@@ -439,81 +596,69 @@ function pieTrace(d, big){
   const labels = top8.map(c=>c.country).concat(othersSum>0 ? ['Others'] : []);
   const values = top8.map(c=>valOf(c)).concat(othersSum>0 ? [othersSum] : []);
   const colors = ["#E5177B","#1791C8","#159B57","#F2A007","#7B3FA0","#2FBF71","#E56A17","#B10F5E","#9AA398"];
-  return [{
-    type:'pie', hole:0.4, labels, values, marker:{ colors },
-    textinfo:'percent', textfont:{size: big?12:9},
-    hovertemplate:'%{label}: $%{value:,.0f}<extra></extra>'
-  }];
+  return [{ type:'pie', hole:0.4, labels, values, marker:{ colors },
+    textinfo:'percent', textfont:{size: big?12:9}, hovertemplate:'%{label}: $%{value:,.0f}<extra></extra>' }];
 }
 function continentTrace(d, big){
   const contSorted = [...d.continents].sort((a,b) => {
     const sa = contSeriesOf(d,a).reduce((s,v)=>s+v,0), sb = contSeriesOf(d,b).reduce((s,v)=>s+v,0);
     return sb-sa;
   });
-  return [{
-    type:'pie', hole:0.55, labels: contSorted.map(c=>EN[c]||c),
+  return [{ type:'pie', hole:0.55, labels: contSorted.map(c=>EN[c]||c),
     values: contSorted.map(c => contSeriesOf(d,c).reduce((s,v)=>s+v,0)),
     marker:{ colors: contSorted.map(c => COLORS[c]||'#999') },
-    textinfo:'percent', textfont:{size: big?12:9},
-    hovertemplate:'%{label}: $%{value:,.0f}<extra></extra>'
-  }];
+    textinfo:'percent', textfont:{size: big?12:9}, hovertemplate:'%{label}: $%{value:,.0f}<extra></extra>' }];
 }
 function distanceTrace(d, big){
   const valid = d.countries.filter(c => c.distance!=null && valOf(c)!=null && valOf(c)>0);
-  return [{
-    x: valid.map(c=>c.distance), y: valid.map(c=>valOf(c)), text: valid.map(c=>c.country),
+  return [{ x: valid.map(c=>c.distance), y: valid.map(c=>valOf(c)), text: valid.map(c=>c.country),
     mode:'markers', type:'scatter',
     marker:{ color:'#E5177B', size: big?10:6.5, opacity:0.8, line:{width:0.6,color:'#B10F5E'} },
-    hovertemplate:'%{text}<br>Distance: %{x:,.0f} km<br>Value: $%{y:,.0f}<extra></extra>'
-  }];
+    hovertemplate:'%{text}<br>Distance: %{x:,.0f} km<br>Value: $%{y:,.0f}<extra></extra>' }];
 }
 function gdpTrace(d, big){
   const valid = d.countries.filter(c => c.gdp!=null && valOf(c)!=null && valOf(c)>0);
-  return [{
-    x: valid.map(c=>c.gdp), y: valid.map(c=>valOf(c)), text: valid.map(c=>c.country),
+  return [{ x: valid.map(c=>c.gdp), y: valid.map(c=>valOf(c)), text: valid.map(c=>c.country),
     mode:'markers', type:'scatter',
     marker:{ color:'#159B57', size: big?10:6.5, opacity:0.8, line:{width:0.6,color:'#0E6E3E'} },
-    hovertemplate:'%{text}<br>GDP: $%{x:,.0f}<br>Value: $%{y:,.0f}<extra></extra>'
-  }];
+    hovertemplate:'%{text}<br>GDP: $%{x:,.0f}<br>Value: $%{y:,.0f}<extra></extra>' }];
 }
-
 const CHART_DEFS = {
-  pie: { title:'Total Purchases 2008–2024', trace: pieTrace, layout:(big)=>({ ...layoutBase(big), showlegend:true, legend:{orientation:'v', x:1, y:0.5, font:{size:big?12:8.5}} }) },
   continent: { title:'Exports by Continent', trace: continentTrace, layout:(big)=>({ ...layoutBase(big), showlegend:true, legend:{orientation:'v', x:1, y:0.5, font:{size:big?12:8.5}} }) },
   distance: { title:'Value vs. Distance', trace: distanceTrace, layout:(big)=>({ ...layoutBase(big), yaxis:{title:'Exported (US$)', type:'log', tickformat:'$,.0s'}, xaxis:{title:'Distance (km)'} }) },
   gdp: { title:'Value vs. Importer GDP', trace: gdpTrace, layout:(big)=>({ ...layoutBase(big), yaxis:{title:'Exported (US$)', type:'log', tickformat:'$,.0s'}, xaxis:{title:'Importer GDP (US$)', type:'log', tickformat:'$,.0s'} }) },
 };
 
-function drawAllCharts(code, d, big){
-  Plotly.newPlot('chart-pie', pieTrace(d,big), { ...CHART_DEFS.pie.layout(big), margin:{t:2,r:2,l:2,b:2} }, {responsive:true, displayModeBar:false});
-  Plotly.newPlot('chart-continent', continentTrace(d,big), { ...CHART_DEFS.continent.layout(big), margin:{t:2,r:2,l:2,b:2} }, {responsive:true, displayModeBar:false});
-  Plotly.newPlot('chart-distance', distanceTrace(d,big), CHART_DEFS.distance.layout(big), {responsive:true, displayModeBar:false});
-  Plotly.newPlot('chart-gdp', gdpTrace(d,big), CHART_DEFS.gdp.layout(big), {responsive:true, displayModeBar:false});
+function renderDeepDive(code, d){
+  Plotly.newPlot('chart-continent', continentTrace(d,false), { ...CHART_DEFS.continent.layout(false), margin:{t:2,r:2,l:2,b:2} }, {responsive:true, displayModeBar:false});
+  Plotly.newPlot('chart-distance', distanceTrace(d,false), CHART_DEFS.distance.layout(false), {responsive:true, displayModeBar:false});
+  Plotly.newPlot('chart-gdp', gdpTrace(d,false), CHART_DEFS.gdp.layout(false), {responsive:true, displayModeBar:false});
+
+  const rankEl = document.getElementById('rank-list');
+  const ranked = [...d.countries].sort((a,b)=>valOf(b)-valOf(a)).slice(0,14);
+  const maxV = valOf(ranked[0]);
+  rankEl.innerHTML = ranked.map(c => `
+    <div class="rank-item">
+      <span class="name">${c.country}</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:${Math.round(100*valOf(c)/maxV)}%"></span></span>
+      <span class="val">${fmtUSD(valOf(c))}</span>
+    </div>`).join('');
+
+  const ftaList = d.countries.filter(c=>c.fta===1).sort((a,b)=>valOf(b)-valOf(a));
+  const ptaList = d.countries.filter(c=>c.pta===1).sort((a,b)=>valOf(b)-valOf(a));
+  document.getElementById('fta-list').innerHTML = ftaList.length ? ftaList.map(c=>`
+    <div class="agreement-item"><span>${c.country}</span><span class="note">${c.note||''}</span></div>`).join('')
+    : '<div class="placeholder" style="text-align:left;margin-top:0;">No countries with an active FTA for this product.</div>';
+  document.getElementById('pta-list').innerHTML = ptaList.length ? ptaList.map(c=>`
+    <div class="agreement-item"><span>${c.country}</span><span class="note">${c.note||''}</span></div>`).join('')
+    : '<div class="placeholder" style="text-align:left;margin-top:0;">No countries with an active PTA for this product.</div>';
 }
 
-function drawCompare(){
-  const traces = CODE_ORDER.map(code => {
-    const d = DATA[code];
-    return {
-      x: d.years, y: totalByYear(d), name: LABEL_EN[d.label]||d.label, type:'scatter', mode:'lines+markers',
-      line:{ color: PRODUCT_COLOR[code], width: code===ACTIVE_CODE?3.5:2 },
-      opacity: code===ACTIVE_CODE?1:0.55,
-      marker:{ size: code===ACTIVE_CODE?6:4 },
-      hovertemplate:'%{x}: $%{y:,.0f}<extra></extra>'
-    };
-  });
-  Plotly.newPlot('chart-compare', traces, {
-    ...layoutBase(false), legend:{orientation:'h', y:-0.2},
-    yaxis:{ title:'Exported (US$)', tickformat:'$,.0s' }, xaxis:{ title:'Year', dtick:2 }
-  }, { responsive:true, displayModeBar:false });
-}
-
-// ---------- Zoom / compare-side-by-side ----------
 function pickChart(key, el){
   const idx = PICKED.indexOf(key);
   if (idx >= 0){ PICKED.splice(idx,1); el.classList.remove('picked'); }
   else {
-    if (PICKED.length >= 2){ // reset, start fresh with this one
+    if (PICKED.length >= 2){
       document.querySelectorAll('.zoomable.picked').forEach(x=>x.classList.remove('picked'));
       PICKED = [];
     }
@@ -525,13 +670,11 @@ function pickChart(key, el){
 function openModal(keys){
   const d = DATA[ACTIVE_CODE];
   const modalBg = document.getElementById('modal-bg');
-  const titleEl = document.getElementById('modal-title');
-  const hintEl = document.getElementById('modal-hint');
-  const chartsEl = document.getElementById('modal-charts');
-  titleEl.textContent = keys.map(k=>CHART_DEFS[k].title).join('  ·  ');
-  hintEl.textContent = keys.length===1
+  document.getElementById('modal-title').textContent = keys.map(k=>CHART_DEFS[k].title).join('  ·  ');
+  document.getElementById('modal-hint').textContent = keys.length===1
     ? 'Click another chart on the dashboard to compare it side by side with this one.'
     : 'Comparing two charts side by side.';
+  const chartsEl = document.getElementById('modal-charts');
   chartsEl.className = 'modal-charts' + (keys.length===2 ? ' two' : '');
   chartsEl.innerHTML = keys.map(k => `<div><div style="font-size:13px;font-weight:600;color:#123524;margin-bottom:6px;">${CHART_DEFS[k].title}</div><div id="modal-chart-${k}" style="height:440px;"></div></div>`).join('');
   modalBg.classList.add('open');
@@ -545,74 +688,44 @@ function closeModal(){
   document.querySelectorAll('.zoomable.picked').forEach(x=>x.classList.remove('picked'));
   PICKED = [];
 }
-document.addEventListener('click', (e) => {
-  if (e.target && e.target.id === 'modal-bg') closeModal();
-});
+document.addEventListener('click', (e) => { if (e.target && e.target.id === 'modal-bg') closeModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-// ---------- Map ----------
-function initMap(code, d){
-  const mapCountries = d.countries.filter(c => c.iso3);
-  function mapValues(yearIdx){
-    return mapCountries.map(c => yearIdx===0 ? (valOf(c)||0) : (seriesOf(c)[yearIdx-1]||0));
+function toggleFullscreen(){
+  if (!document.fullscreenElement){
+    document.documentElement.requestFullscreen().catch(()=>{});
+    document.getElementById('fs-btn').textContent = '⤢ Exit Fullscreen';
+  } else {
+    document.exitFullscreen();
+    document.getElementById('fs-btn').textContent = '⛶ Fullscreen';
   }
-  function drawMap(yearIdx){
-    const vals = mapValues(yearIdx);
-    const logVals = vals.map(v => v>0 ? Math.log10(v) : null);
-    Plotly.newPlot('map-holder', [{
-      type:'choropleth',
-      locations: mapCountries.map(c=>c.iso3),
-      z: logVals,
-      text: mapCountries.map((c,i)=> c.country+'<br>'+fmtUSD(vals[i])),
-      customdata: mapCountries.map(c=>c.iso3),
-      hovertemplate:'%{text}<extra></extra>',
-      colorscale:[[0,'#F3F1E9'],[0.3,'#F9C7DD'],[0.6,'#E5177B'],[1,'#0E6E3E']],
-      showscale:false, marker:{ line:{ color:'#fff', width:0.5 } }
-    }], {
-      ...layoutBase(true), margin:{t:0,r:0,l:0,b:0},
-      geo:{ showframe:false, showcoastlines:false, projection:{type:'natural earth'},
-            bgcolor:'rgba(0,0,0,0)', landcolor:'#F3F1E9', showocean:true, oceancolor:'#FFFFFF',
-            showcountries:true, countrycolor:'#FFFFFF' }
-    }, { responsive:true, displayModeBar:false, scrollZoom:true });
+}
+document.addEventListener('fullscreenchange', () => {
+  document.getElementById('fs-btn').textContent = document.fullscreenElement ? '⤢ Exit Fullscreen' : '⛶ Fullscreen';
+});
 
-    document.getElementById('map-holder').on('plotly_click', (ev) => {
-      const iso3 = ev.points[0].customdata;
-      const c = d.countries.find(x => x.iso3===iso3);
-      if (c) showDetail(c, d);
-    });
-  }
-  function showDetail(c, d){
-    const el = document.getElementById('detail-mini');
-    const badge = c.fta ? '<span class="badge fta">FTA active</span>' :
-                  c.pta ? '<span class="badge pta">PTA active</span>' :
-                  '<span class="badge none">No FTA/PTA</span>';
-    const tariffTxt = (c.tariff==null) ? '—' : c.tariff.toFixed(1)+'%';
-    el.innerHTML = `
-      <h3>${c.country}</h3>
-      <div class="ctag">${EN[c.continent]||c.continent}</div>
-      ${badge}
-      <div class="drow"><span class="k">Total exported 08–24</span><span class="v">${fmtUSD(valOf(c))}</span></div>
-      <div class="drow"><span class="k">Distance</span><span class="v">${c.distance? c.distance.toLocaleString('en')+' km':'—'}</span></div>
-      <div class="drow"><span class="k">GDP (latest)</span><span class="v">${fmtUSD(c.gdp)}</span></div>
-      <div class="drow"><span class="k">Tariff today</span><span class="v">${tariffTxt}</span></div>
-      <div id="mini-trend" style="height:120px;margin-top:8px;"></div>
-    `;
-    Plotly.newPlot('mini-trend', [{
-      x: d.years, y: seriesOf(c), type:'scatter', mode:'lines+markers',
-      line:{ color:'#E5177B', width:2 }, marker:{ size:3, color:'#159B57' },
-      fill:'tozeroy', fillcolor:'rgba(229,23,123,0.12)',
-      hovertemplate:'%{x}: $%{y:,.0f}<extra></extra>'
-    }], { ...layoutBase(false), margin:{t:4,r:4,l:40,b:20}, yaxis:{ tickformat:'$,.0s' }, xaxis:{ dtick:6 } },
-      { responsive:true, displayModeBar:false });
-  }
-  drawMap(0);
-  const slider = document.getElementById('yr-slider');
-  const yrLabel = document.getElementById('yr-label');
-  slider.addEventListener('input', () => {
-    const idx = parseInt(slider.value,10);
-    yrLabel.textContent = idx===0 ? 'Total 08–24' : d.years[idx-1];
-    drawMap(idx);
+function setupHScroll(){
+  const hs = document.getElementById('hscroll');
+  hs.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)){
+      e.preventDefault();
+      hs.scrollLeft += e.deltaY;
+    }
+  }, { passive:false });
+  hs.addEventListener('scroll', () => {
+    const idx = Math.round(hs.scrollLeft / hs.clientWidth);
+    if (idx !== currentPage){
+      currentPage = idx;
+      document.querySelectorAll('.dots button').forEach((b,i)=>b.classList.toggle('active', i===idx));
+    }
   });
+}
+function gotoPage(idx){
+  const hs = document.getElementById('hscroll');
+  idx = Math.max(0, Math.min(2, idx));
+  hs.scrollTo({ left: idx * hs.clientWidth, behavior:'smooth' });
+  currentPage = idx;
+  document.querySelectorAll('.dots button').forEach((b,i)=>b.classList.toggle('active', i===idx));
 }
 </script>
 </body>
