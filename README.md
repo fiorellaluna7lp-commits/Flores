@@ -10,33 +10,26 @@ vigentes año a año.
 
 ## The interactive dashboard — "Bloom Atlas"
 
-A **horizontal-scrolling, 3-page experience** (`docs/index.html`) in a saturated tropical/floral
-palette (fuchsia, jungle green, marigold, violet on a deep forest header). Scroll the mouse wheel
-down (or drag/swipe) to move **right** through the pages — there's no vertical page scroll. Use
-the arrow buttons, the dot navigator (bottom-center), or the ← → keyboard arrows.
+A single, big **vertical-scrolling page** (`docs/index.html`) in a saturated tropical/floral
+palette (fuchsia, jungle green, marigold, violet on a deep forest header).
 
-**Page 1 — Overview & World Map**
-- KPI ring row (total exported, top buyer, distance/GDP correlation, with a growth-trend arrow).
-- A big clickable world map (560px tall, full width) — click a country for its full profile in a
-  compact side panel (value, distance, GDP, FTA/PTA status + source note, mini trend line). The
-  panel stays small when empty instead of a big blank box.
+- **KPI ring row** — total exported, top buyer, distance/GDP correlation, with a growth-trend arrow.
+- **A big clickable world map** (640px tall, full width) — colored on a **single-hue scale**
+  (light = low export value, deep fuchsia = high export value) instead of a multi-color scale, so
+  it reads at a glance. **Hover** any country to see its export value and FTA/PTA status right in
+  the tooltip (e.g. "Russia $249,393 · FTA: No / PTA: No"); **click** it for the full profile in
+  the side panel (value, distance, GDP, FTA/PTA + source note, mini trend line). The panel stays
+  small when empty instead of a big blank box.
 - **Agreement filter** (top bar) — show only countries with an active FTA, only PTA, only
-  "no agreement", or all.
+  "no agreement", or all; live counts shown above the map.
 - **Year filter** (top bar dropdown) — isolate the whole dashboard to a single year, or view all
   years accumulated.
-
-**Page 2 — Trends & Product Profile**
-- **Total Purchases 2008–2024 — All Products Compared**: all 3 products' yearly export value
+- **Total Purchases 2008–2024 — All Products Compared** — all 3 products' yearly export value
   overlaid on one chart, active product highlighted.
 - **"What is this product?"** — description + illustration for the selected tariff code.
-
-**Page 3 — Deep Dive**
 - Continent donut, distance scatter, GDP scatter (click any to zoom; pick a 2nd chart to compare
   side by side in a modal).
 - Top destination countries ranked list, tagged FTA/PTA.
-- Source note.
-
-**Other controls (top bar, always visible)**
 - **Fullscreen button** — uses the browser's Fullscreen API so the address bar and browser chrome
   are hidden while presenting.
 - **Nominal $ / Real (2024) $ toggle** — inflation-adjusts every KPI, chart and the map using
