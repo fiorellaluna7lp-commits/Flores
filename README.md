@@ -8,22 +8,20 @@ vigentes año a año.
 **[→ Ver el dashboard interactivo](https://fiorellaluna7lp-commits.github.io/Flores/)**
 *(se activa automaticamente 1-2 minutos despues de habilitar GitHub Pages — ver instrucciones abajo)*
 
-## El dashboard interactivo
+## The interactive dashboard
 
-Página única (`docs/index.html`) con:
+Single-screen, horizontal BI-style layout (`docs/index.html`), in English, pastel palette:
 
-- **Mapa mundial clicable** — toca cualquier país y se abre su ficha completa a la derecha:
-  valor exportado, distancia a Ecuador, PIB, si tiene FTA/PTA vigente (con la fuente/nota), y un
-  mini-gráfico de su evolución 2008-2024.
-- **Slider de año** — mueve el control para ver cómo cambia el mapa año a año, o déjalo en
-  "Total 2008-24" para ver el acumulado.
-- **3 pestañas de producto** — rosas / claveles / otras flores, cada una con su propio mapa,
-  KPIs y gráficos.
-- **3 gráficos por producto** — barras apiladas por continente-año, y dos dispersiones
-  (distancia y PIB) con escala logarítmica.
+- **Top bar** — dark navy header with pill filters to switch between the 3 tariff codes (roses /
+  carnations / other flowers).
+- **KPI ring row** — total exported, top buyer share, distance correlation, GDP correlation.
+- **Clickable world map** — click any country to open its profile (value, distance, GDP,
+  FTA/PTA status + source note, and a mini trend line 2008–2024) in the side panel.
+- **Year slider** — animate the map by year, or leave it on "Total 08–24" for the accumulated view.
+- **Top destination countries** — ranked bar list.
+- **Continent donut** and two **scatter plots** (distance, GDP) with log scales.
 
-Corre 100% en el navegador (Plotly.js vía CDN), sin backend — por eso funciona directo en
-GitHub Pages.
+Runs 100% client-side (Plotly.js via CDN, no backend) — works directly on GitHub Pages.
 
 ## Qué responde este análisis
 
