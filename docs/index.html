@@ -10,118 +10,134 @@
 <style>
   :root{
     --bg:#EEF1F5;
-    --navy:#1F2A44;
-    --navy-2:#2B3A5C;
-    --teal:#5FA8A0;
-    --teal-dark:#3E7A73;
-    --pink:#E88DA0;
-    --pink-dark:#C96B80;
-    --gold:#E0B15C;
+    --navy:#182446;
+    --navy-2:#24335E;
+    --teal:#1FA398;
+    --teal-dark:#137268;
+    --pink:#E63E68;
+    --pink-dark:#B32950;
+    --gold:#E8A93A;
+    --blue:#3E7CD6;
+    --purple:#8C5FD6;
     --card:#FFFFFF;
-    --ink:#2B2F38;
-    --muted:#8B93A1;
-    --line:#E4E8EE;
+    --ink:#1B2233;
+    --muted:#7C859A;
+    --line:#E1E6EE;
   }
   *{box-sizing:border-box;}
   body{
     margin:0; background:var(--bg); color:var(--ink);
     font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;
-    font-size:13px;
+    font-size:12.5px;
   }
   .mono{ font-family:'IBM Plex Mono',monospace; }
 
-  /* ---------- Top bar ---------- */
   .topbar{
     background:var(--navy); color:#fff;
-    padding:16px 24px; display:flex; align-items:center; justify-content:space-between;
-    flex-wrap:wrap; gap:14px;
+    padding:14px 22px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px;
   }
-  .topbar .brand{ display:flex; align-items:center; gap:12px; }
+  .topbar .brand{ display:flex; align-items:center; gap:10px; }
   .brand .icon{
-    width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--pink),var(--teal));
-    display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;
+    width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--pink),var(--teal));
+    display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0;
   }
-  .brand h1{ font-size:16px; font-weight:600; margin:0; letter-spacing:.01em; }
-  .brand p{ font-size:11px; margin:2px 0 0; color:#B7C0D6; }
+  .brand h1{ font-size:15px; font-weight:600; margin:0; letter-spacing:.01em; }
+  .brand p{ font-size:10.5px; margin:2px 0 0; color:#A9B3CE; }
 
-  .filters{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-  .filters .flabel{ font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:#9AA6C2; margin-right:4px; }
+  .filters{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .fgroup{ display:flex; align-items:center; gap:6px; }
+  .fgroup .flabel{ font-size:9.5px; text-transform:uppercase; letter-spacing:.08em; color:#8A94B5; margin-right:2px; }
   .pill{
-    font-family:'Poppins',sans-serif; font-size:12px; font-weight:500;
-    padding:7px 16px; border-radius:20px; border:1px solid rgba(255,255,255,0.14);
-    background:rgba(255,255,255,0.06); color:#DDE3F0; cursor:pointer; transition:.15s;
+    font-family:'Poppins',sans-serif; font-size:11.5px; font-weight:500;
+    padding:6px 14px; border-radius:18px; border:1px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.07); color:#DDE3F0; cursor:pointer; transition:.15s;
   }
-  .pill:hover{ background:rgba(255,255,255,0.13); }
+  .pill:hover{ background:rgba(255,255,255,0.15); }
   .pill.active{ background:var(--pink); color:#fff; border-color:var(--pink); }
+  .pill.toggle.active{ background:var(--teal); border-color:var(--teal); }
 
-  /* ---------- Layout ---------- */
-  .dash{ padding:16px 20px 26px; max-width:1500px; margin:0 auto; }
+  .dash{ padding:14px 18px 22px; max-width:1620px; margin:0 auto; }
 
-  .kpi-row{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:14px;
-  }
+  .kpi-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:12px; }
   .kpi-card{
-    background:var(--card); border-radius:12px; padding:14px 16px;
-    display:flex; align-items:center; gap:12px; box-shadow:0 1px 3px rgba(31,42,68,0.06);
+    background:var(--card); border-radius:12px; padding:12px 14px;
+    display:flex; align-items:center; gap:10px; box-shadow:0 1px 3px rgba(24,36,70,0.07);
+    border-left:4px solid var(--pink);
   }
-  .kpi-ring{ width:64px; height:64px; flex-shrink:0; }
-  .kpi-text .label{ font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:3px; }
-  .kpi-text .big{ font-size:20px; font-weight:700; color:var(--navy); line-height:1.1; }
-  .kpi-text .sub{ font-size:11px; color:var(--muted); margin-top:2px; }
+  .kpi-card:nth-child(2){ border-left-color:var(--teal); }
+  .kpi-card:nth-child(3){ border-left-color:var(--blue); }
+  .kpi-card:nth-child(4){ border-left-color:var(--gold); }
+  .kpi-ring{ width:56px; height:56px; flex-shrink:0; }
+  .kpi-text .label{ font-size:9.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:2px; }
+  .kpi-text .big{ font-size:18px; font-weight:700; color:var(--navy); line-height:1.1; }
+  .kpi-text .sub{ font-size:10px; color:var(--muted); margin-top:2px; }
 
   .grid{
     display:grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-columns: 1.35fr 0.85fr 0.85fr 0.85fr;
     grid-template-rows: auto auto;
-    gap:14px;
+    gap:12px;
   }
-  @media (max-width:1100px){
+  @media (max-width:1250px){
+    .grid{ grid-template-columns:1fr 1fr; }
+    .map-card{ grid-column:1 / span 2 !important; grid-row:1 !important; }
+  }
+  @media (max-width:640px){
     .grid{ grid-template-columns:1fr; }
+    .map-card{ grid-column:1 !important; }
     .kpi-row{ grid-template-columns:repeat(2,1fr); }
   }
 
   .card{
-    background:var(--card); border-radius:12px; padding:16px 18px;
-    box-shadow:0 1px 3px rgba(31,42,68,0.06);
+    background:var(--card); border-radius:12px; padding:14px 16px;
+    box-shadow:0 1px 3px rgba(24,36,70,0.07);
   }
-  .card h2{ font-size:13px; font-weight:600; color:var(--navy); margin:0 0 2px; display:flex; align-items:center; gap:6px; }
+  .card h2{ font-size:12px; font-weight:600; color:var(--navy); margin:0 0 2px; display:flex; align-items:center; gap:6px; }
   .card h2 .dot{ width:7px; height:7px; border-radius:50%; background:var(--pink); display:inline-block; }
-  .card p.desc{ font-size:11px; color:var(--muted); margin:0 0 10px; }
+  .card p.desc{ font-size:10.5px; color:var(--muted); margin:0 0 8px; }
 
   .map-card{ grid-column:1; grid-row:1 / span 2; display:flex; flex-direction:column; }
-  .slider-row{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-  .slider-row .yr{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--pink-dark); font-weight:600; min-width:78px; }
+  .slider-row{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .slider-row .yr{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--pink-dark); font-weight:600; min-width:78px; }
   .slider-row input[type=range]{ flex:1; accent-color:var(--pink); }
-  .map-body{ display:grid; grid-template-columns:1fr 210px; gap:12px; flex:1; }
-  #map-holder{ min-height:330px; }
+  .map-body{ display:grid; grid-template-columns:1fr 200px; gap:10px; flex:1; }
+  #map-holder{ min-height:300px; }
   .detail-mini{
-    background:var(--bg); border-radius:10px; padding:12px; font-size:11.5px;
-    display:flex; flex-direction:column; min-height:330px;
+    background:var(--bg); border-radius:10px; padding:10px; font-size:11px;
+    display:flex; flex-direction:column; min-height:300px;
   }
   .detail-mini .placeholder{ color:var(--muted); line-height:1.5; }
-  .detail-mini h3{ font-size:15px; margin:0 0 2px; color:var(--navy); }
-  .detail-mini .ctag{ font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
-  .drow{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed var(--line); }
+  .detail-mini h3{ font-size:14px; margin:0 0 2px; color:var(--navy); }
+  .detail-mini .ctag{ font-size:9.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; }
+  .drow{ display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dashed var(--line); }
   .drow .k{ color:var(--muted); }
   .drow .v{ font-weight:600; font-family:'IBM Plex Mono',monospace; }
-  .badge{ font-size:9.5px; padding:3px 9px; border-radius:14px; display:inline-block; margin-bottom:8px; font-family:'IBM Plex Mono',monospace; }
+  .badge{ font-size:9px; padding:3px 8px; border-radius:14px; display:inline-block; margin-bottom:6px; font-family:'IBM Plex Mono',monospace; }
   .badge.fta{ background:var(--teal); color:#fff; }
   .badge.pta{ background:var(--gold); color:#fff; }
-  .badge.none{ background:#E4E8EE; color:var(--muted); }
+  .badge.none{ background:#E1E6EE; color:var(--muted); }
 
-  .rank-card{ grid-column:2; grid-row:1; }
-  .rank-list{ max-height:230px; overflow-y:auto; }
-  .rank-item{ display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid var(--line); font-size:11.5px; }
-  .rank-item .name{ flex:1; }
-  .rank-item .bar-bg{ width:70px; height:6px; background:var(--line); border-radius:4px; overflow:hidden; }
+  .info-card{ grid-column:2; grid-row:1; }
+  .info-body{ display:flex; gap:12px; align-items:center; }
+  .info-img{ width:96px; height:96px; flex-shrink:0; }
+  .info-text{ font-size:11px; line-height:1.5; color:#3C4459; }
+  .info-text b{ color:var(--navy); }
+
+  .pie-card{ grid-column:3; grid-row:1; }
+  .cont-card{ grid-column:4; grid-row:1; }
+  .rank-card{ grid-column:2; grid-row:2; }
+  .rank-list{ max-height:190px; overflow-y:auto; }
+  .rank-item{ display:flex; align-items:center; gap:6px; padding:5px 0; border-bottom:1px solid var(--line); font-size:11px; }
+  .rank-item .name{ flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .rank-item .bar-bg{ width:56px; height:6px; background:var(--line); border-radius:4px; overflow:hidden; }
   .rank-item .bar-fill{ height:100%; background:var(--pink); }
-  .rank-item .val{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--navy); width:52px; text-align:right; }
+  .rank-item .val{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--navy); width:48px; text-align:right; }
 
-  .cont-card{ grid-column:3; grid-row:1; }
-  .dist-card{ grid-column:2; grid-row:2; }
-  .gdp-card{ grid-column:3; grid-row:2; }
+  .dist-card{ grid-column:3; grid-row:2; }
+  .gdp-card{ grid-column:4; grid-row:2; }
 
-  footer{ padding:18px 20px 34px; font-size:10.5px; color:var(--muted); max-width:1500px; margin:0 auto; line-height:1.6; }
+  footer{ padding:16px 18px 30px; font-size:10px; color:var(--muted); max-width:1620px; margin:0 auto; line-height:1.6; }
 </style>
 </head>
 <body>
@@ -134,8 +150,9 @@
       <p>Ecuador · HS 0603 · Comtrade panel, 2008–2024</p>
     </div>
   </div>
-  <div class="filters" id="filters">
-    <span class="flabel">Product</span>
+  <div class="filters">
+    <div class="fgroup"><span class="flabel">Product</span><span id="filters-product"></span></div>
+    <div class="fgroup"><span class="flabel">Values</span><span id="filters-value"></span></div>
   </div>
 </div>
 
@@ -144,34 +161,63 @@
 <footer>
   Source: UN Comtrade (via the user's Google Sheet), processed with native Excel formulas
   (SUMIFS / VLOOKUP / CORREL), verified with headless LibreOffice. FTA/PTA status per country-year
-  from SICE-OAS and Ecuador's Ministry of Production, Foreign Trade and Investment. Full-formula
-  .xlsx workbooks are in <code>/excel</code> of this repository.
+  from SICE-OAS and Ecuador's Ministry of Production, Foreign Trade and Investment. Inflation
+  adjustment uses U.S. CPI-U annual averages (BLS), rebased to 2024 dollars. Full-formula .xlsx
+  workbooks are in <code>/excel</code> of this repository.
 </footer>
 
 <script>
 const CODE_ORDER = ["060311","060319","060312"];
 const COLORS = {
-  "North America":"#E88DA0","South America":"#E0B15C","Europe":"#5FA8A0",
-  "Asia":"#7FA0C9","Africa":"#B6A8D6","Oceania":"#8FBF9F","Sin clasificar":"#C9CFDA"
+  "North America":"#E63E68","South America":"#E8A93A","Europe":"#1FA398",
+  "Asia":"#3E7CD6","Africa":"#8C5FD6","Oceania":"#2FBF71","Sin clasificar":"#AAB3C5"
 };
 const EN = {
   "North America":"North America","South America":"South America","Europe":"Europe",
   "Asia":"Asia","Africa":"Africa","Oceania":"Oceania","Sin clasificar":"Unclassified"
 };
-const LABEL_EN = { "Rosas frescas":"Fresh roses", "Otras flores":"Other flowers", "Claveles":"Carnations" };
+const LABEL_EN = { "Rosas frescas":"Fresh Roses", "Otras flores":"Other Flowers", "Claveles":"Carnations" };
 
-let DATA = null, ACTIVE = null;
+const PRODUCT_INFO = {
+  "060311": {
+    title: "Fresh Roses",
+    text: "Ecuador is one of the world's leading rose exporters. High-altitude Andean farms (2,300–3,000m) give Ecuadorian roses unusually <b>large heads, long stems, and vivid saturated colors</b>, prized by florists worldwide for weddings and premium bouquets. HS 060311 covers fresh cut roses and rosebuds.",
+    img: `<svg viewBox="0 0 100 100"><circle cx="50" cy="38" r="26" fill="#E63E68"/><circle cx="50" cy="38" r="17" fill="#F2678A"/><circle cx="50" cy="38" r="9" fill="#FBA5BB"/><path d="M50 62 L50 92" stroke="#1FA398" stroke-width="5" fill="none"/><path d="M50 74 Q34 70 30 82" stroke="#1FA398" stroke-width="4" fill="none"/><path d="M50 80 Q66 76 70 88" stroke="#1FA398" stroke-width="4" fill="none"/></svg>`
+  },
+  "060319": {
+    title: "Other Fresh Flowers",
+    text: "This category covers all other fresh cut flowers and buds for bouquets or ornamental use, <b>excluding roses, carnations, orchids, chrysanthemums and lilies</b> — think gypsophila, delphiniums, hydrangeas and summer flowers grown for mixed export bouquets.",
+    img: `<svg viewBox="0 0 100 100"><circle cx="34" cy="34" r="10" fill="#3E7CD6"/><circle cx="60" cy="26" r="8" fill="#E8A93A"/><circle cx="66" cy="46" r="10" fill="#8C5FD6"/><circle cx="40" cy="52" r="9" fill="#E63E68"/><path d="M50 60 L50 92" stroke="#1FA398" stroke-width="5" fill="none"/></svg>`
+  },
+  "060312": {
+    title: "Carnations",
+    text: "Carnations (<i>Dianthus caryophyllus</i>) are a <b>lower-cost, long-lasting</b> cut flower widely used in ceremonies, everyday bouquets and mass-market floral arrangements. Ecuador exports them at a smaller scale than roses, mostly to Europe and Asia.",
+    img: `<svg viewBox="0 0 100 100"><g fill="#E8A93A"><circle cx="50" cy="36" r="22"/></g><g fill="#F2C36B"><circle cx="42" cy="30" r="7"/><circle cx="58" cy="30" r="7"/><circle cx="50" cy="42" r="8"/><circle cx="38" cy="42" r="6"/><circle cx="62" cy="42" r="6"/></g><path d="M50 58 L50 92" stroke="#1FA398" stroke-width="5" fill="none"/></svg>`
+  }
+};
+
+let DATA = null, META = null, ACTIVE_CODE = null, USE_REAL = false;
 
 fetch('data.json').then(r => r.json()).then(d => {
+  META = d._meta; delete d._meta;
   DATA = d;
-  const filtersEl = document.getElementById('filters');
+  const pf = document.getElementById('filters-product');
   CODE_ORDER.forEach((code,i) => {
     const b = document.createElement('button');
     b.className = 'pill' + (i===0 ? ' active':'');
-    b.textContent = (LABEL_EN[d[code].label]||d[code].label) + ' · ' + code;
+    b.textContent = (LABEL_EN[d[code].label]||d[code].label);
     b.onclick = () => selectProduct(code);
-    filtersEl.appendChild(b);
+    pf.appendChild(b);
   });
+  const vf = document.getElementById('filters-value');
+  const bNom = document.createElement('button');
+  bNom.className = 'pill toggle active'; bNom.textContent = 'Nominal $';
+  bNom.onclick = () => selectValueMode(false);
+  const bReal = document.createElement('button');
+  bReal.className = 'pill toggle'; bReal.textContent = `Real $ (${META.cpi_base_year})`;
+  bReal.onclick = () => selectValueMode(true);
+  vf.appendChild(bNom); vf.appendChild(bReal);
+
   selectProduct(CODE_ORDER[0]);
 });
 
@@ -183,50 +229,64 @@ function fmtUSD(v){
   if (av >= 1e3) return '$' + (v/1e3).toFixed(0) + 'K';
   return '$' + Math.round(v);
 }
+function valOf(c){ return USE_REAL ? c.value_real : c.value; }
+function seriesOf(c){ return USE_REAL ? c.series_real : c.series; }
+function contSeriesOf(d, cont){ return USE_REAL ? d.series_real[cont] : d.series[cont]; }
+function corrDist(d){ return USE_REAL ? d.corr_distance_real : d.corr_distance; }
+function corrGdp(d){ return USE_REAL ? d.corr_gdp_real : d.corr_gdp; }
 
 function layoutBase(){
   return {
     paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
-    font:{ family:'Poppins, sans-serif', color:'#2B2F38', size:11 },
-    margin:{ t:8, r:14, l:52, b:38 },
+    font:{ family:'Poppins, sans-serif', color:'#1B2233', size:10.5 },
+    margin:{ t:6, r:10, l:48, b:34 },
     hoverlabel:{ font:{ family:'IBM Plex Mono, monospace', size:11 } }
   };
 }
-
 function ring(elId, pct, color){
   Plotly.newPlot(elId, [{
-    type:'pie', hole:0.72, values:[pct, 100-pct], sort:false, direction:'clockwise',
+    type:'pie', hole:0.7, values:[pct, 100-pct], sort:false, direction:'clockwise',
     marker:{ colors:[color, '#EEF1F5'] }, textinfo:'none', hoverinfo:'skip'
   }], { ...layoutBase(), margin:{t:0,r:0,l:0,b:0}, showlegend:false,
-        annotations:[{ text: Math.round(pct)+'%', showarrow:false, font:{size:14, color:'#1F2A44', family:'Poppins'} }] },
+        annotations:[{ text: Math.round(pct)+'%', showarrow:false, font:{size:13, color:'#182446', family:'Poppins'} }] },
     { staticPlot:true });
 }
 
 function selectProduct(code){
-  ACTIVE = code;
-  document.querySelectorAll('.pill').forEach((b,i) => b.classList.toggle('active', CODE_ORDER[i]===code));
+  ACTIVE_CODE = code;
+  document.querySelectorAll('#filters-product .pill').forEach((b,i) => b.classList.toggle('active', CODE_ORDER[i]===code));
   renderDash(code);
+}
+function selectValueMode(real){
+  USE_REAL = real;
+  const btns = document.querySelectorAll('#filters-value .pill');
+  btns[0].classList.toggle('active', !real);
+  btns[1].classList.toggle('active', real);
+  renderDash(ACTIVE_CODE);
 }
 
 function renderDash(code){
   const d = DATA[code];
-  const total = d.countries.reduce((s,c)=> s + (c.value||0), 0);
-  const top = [...d.countries].sort((a,b)=>b.value-a.value)[0];
-  const topShare = Math.round(100*top.value/total);
-  const distPct = Math.round(Math.abs(d.corr_distance)*100);
-  const gdpPct = Math.round(Math.abs(d.corr_gdp)*100);
+  const total = d.countries.reduce((s,c)=> s + (valOf(c)||0), 0);
+  const top = [...d.countries].sort((a,b)=>valOf(b)-valOf(a))[0];
+  const topShare = Math.round(100*valOf(top)/total);
+  const cd = corrDist(d), cg = corrGdp(d);
+  const distPct = Math.round(Math.abs(cd)*100);
+  const gdpPct = Math.round(Math.abs(cg)*100);
+  const info = PRODUCT_INFO[code];
+  const valLabel = USE_REAL ? `${META.cpi_base_year} real $` : 'nominal $';
 
   const dash = document.getElementById('dash');
   dash.innerHTML = `
     <div class="kpi-row">
       <div class="kpi-card"><div class="kpi-ring" id="ring-total"></div>
-        <div class="kpi-text"><div class="label">Total Exported</div><div class="big">${fmtUSD(total)}</div><div class="sub">${d.countries.length} destination countries</div></div></div>
+        <div class="kpi-text"><div class="label">Total Exported (${valLabel})</div><div class="big">${fmtUSD(total)}</div><div class="sub">${d.countries.length} destination countries</div></div></div>
       <div class="kpi-card"><div class="kpi-ring" id="ring-top"></div>
-        <div class="kpi-text"><div class="label">Top Buyer Share</div><div class="big">${top.country}</div><div class="sub">${fmtUSD(top.value)} · ${topShare}% of total</div></div></div>
+        <div class="kpi-text"><div class="label">Top Buyer Share</div><div class="big">${top.country}</div><div class="sub">${fmtUSD(valOf(top))} · ${topShare}% of total</div></div></div>
       <div class="kpi-card"><div class="kpi-ring" id="ring-dist"></div>
-        <div class="kpi-text"><div class="label">Distance Correlation</div><div class="big">${d.corr_distance.toFixed(2)}</div><div class="sub">${distPct<20?'Distance barely matters':'Some relationship'}</div></div></div>
+        <div class="kpi-text"><div class="label">Distance Correlation</div><div class="big">${cd.toFixed(2)}</div><div class="sub">${distPct<20?'Distance barely matters':'Some relationship'}</div></div></div>
       <div class="kpi-card"><div class="kpi-ring" id="ring-gdp"></div>
-        <div class="kpi-text"><div class="label">GDP Correlation</div><div class="big">${d.corr_gdp.toFixed(2)}</div><div class="sub">${gdpPct>50?'Buying power drives volume':'Moderate relationship'}</div></div></div>
+        <div class="kpi-text"><div class="label">GDP Correlation</div><div class="big">${cg.toFixed(2)}</div><div class="sub">${gdpPct>50?'Buying power drives volume':'Moderate relationship'}</div></div></div>
     </div>
 
     <div class="grid">
@@ -245,79 +305,104 @@ function renderDash(code){
         </div>
       </div>
 
-      <div class="card rank-card">
-        <h2><span class="dot"></span>Top Destination Countries</h2>
-        <p class="desc">Ranked by total value exported, 2008–2024.</p>
-        <div class="rank-list" id="rank-list"></div>
+      <div class="card info-card">
+        <h2><span class="dot"></span>What is this product?</h2>
+        <div class="info-body">
+          <div class="info-img">${info.img}</div>
+          <div class="info-text"><b>${info.title}</b><br>${info.text}</div>
+        </div>
+      </div>
+
+      <div class="card pie-card">
+        <h2><span class="dot"></span>Total Purchases 2008–2024</h2>
+        <p class="desc">Share of total value by country (${valLabel}).</p>
+        <div id="chart-pie" style="height:200px;"></div>
       </div>
 
       <div class="card cont-card">
         <h2><span class="dot"></span>Exports by Continent</h2>
         <p class="desc">Share of total value, 2008–2024.</p>
-        <div id="chart-continent" style="height:230px;"></div>
+        <div id="chart-continent" style="height:200px;"></div>
+      </div>
+
+      <div class="card rank-card">
+        <h2><span class="dot"></span>Top Destination Countries</h2>
+        <p class="desc">Ranked by total value exported.</p>
+        <div class="rank-list" id="rank-list"></div>
       </div>
 
       <div class="card dist-card">
         <h2><span class="dot"></span>Value vs. Distance</h2>
-        <p class="desc">Each dot is a country. No clear slope = distance doesn't drive volume.</p>
-        <div id="chart-distance" style="height:230px;"></div>
+        <p class="desc">No clear slope = distance doesn't drive volume.</p>
+        <div id="chart-distance" style="height:190px;"></div>
       </div>
 
       <div class="card gdp-card">
         <h2><span class="dot"></span>Value vs. Importer GDP</h2>
-        <p class="desc">Each dot is a country. A clear upward trend appears here.</p>
-        <div id="chart-gdp" style="height:230px;"></div>
+        <p class="desc">A clear upward trend appears here.</p>
+        <div id="chart-gdp" style="height:190px;"></div>
       </div>
     </div>
   `;
 
-  ring('ring-total', 100, '#5FA8A0');
-  ring('ring-top', topShare, '#E88DA0');
-  ring('ring-dist', Math.max(distPct,4), '#7FA0C9');
-  ring('ring-gdp', Math.max(gdpPct,4), '#E0B15C');
+  ring('ring-total', 100, '#E63E68');
+  ring('ring-top', topShare, '#1FA398');
+  ring('ring-dist', Math.max(distPct,4), '#3E7CD6');
+  ring('ring-gdp', Math.max(gdpPct,4), '#E8A93A');
 
-  // Rank list
   const rankEl = document.getElementById('rank-list');
-  const ranked = [...d.countries].sort((a,b)=>b.value-a.value).slice(0,12);
-  const maxV = ranked[0].value;
+  const ranked = [...d.countries].sort((a,b)=>valOf(b)-valOf(a)).slice(0,12);
+  const maxV = valOf(ranked[0]);
   rankEl.innerHTML = ranked.map(c => `
     <div class="rank-item">
       <span class="name">${c.country}</span>
-      <span class="bar-bg"><span class="bar-fill" style="width:${Math.round(100*c.value/maxV)}%"></span></span>
-      <span class="val">${fmtUSD(c.value)}</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:${Math.round(100*valOf(c)/maxV)}%"></span></span>
+      <span class="val">${fmtUSD(valOf(c))}</span>
     </div>`).join('');
 
-  // Continent donut
+  // Total purchases pie: top 8 countries + "Others"
+  const sortedC = [...d.countries].sort((a,b)=>valOf(b)-valOf(a));
+  const top8 = sortedC.slice(0,8);
+  const othersSum = sortedC.slice(8).reduce((s,c)=>s+(valOf(c)||0),0);
+  const pieLabels = top8.map(c=>c.country).concat(othersSum>0 ? ['Others'] : []);
+  const pieValues = top8.map(c=>valOf(c)).concat(othersSum>0 ? [othersSum] : []);
+  const pieColors = ["#E63E68","#3E7CD6","#1FA398","#E8A93A","#8C5FD6","#2FBF71","#E67E22","#D63384","#AAB3C5"];
+  Plotly.newPlot('chart-pie', [{
+    type:'pie', hole:0.4, labels: pieLabels, values: pieValues,
+    marker:{ colors: pieColors }, textinfo:'percent', textfont:{size:9},
+    hovertemplate:'%{label}: $%{value:,.0f}<extra></extra>'
+  }], { ...layoutBase(), margin:{t:2,r:2,l:2,b:2}, showlegend:true,
+        legend:{ orientation:'v', font:{size:8.5}, x:1, y:0.5 } },
+    { responsive:true, displayModeBar:false });
+
   const contSorted = [...d.continents].sort((a,b) => {
-    const sa = d.series[a].reduce((s,v)=>s+v,0), sb = d.series[b].reduce((s,v)=>s+v,0);
+    const sa = contSeriesOf(d,a).reduce((s,v)=>s+v,0), sb = contSeriesOf(d,b).reduce((s,v)=>s+v,0);
     return sb-sa;
   });
   Plotly.newPlot('chart-continent', [{
     type:'pie', hole:0.55, labels: contSorted.map(c=>EN[c]||c),
-    values: contSorted.map(c => d.series[c].reduce((s,v)=>s+v,0)),
+    values: contSorted.map(c => contSeriesOf(d,c).reduce((s,v)=>s+v,0)),
     marker:{ colors: contSorted.map(c => COLORS[c]||'#999') },
-    textinfo:'percent', textfont:{size:10},
+    textinfo:'percent', textfont:{size:9},
     hovertemplate:'%{label}: $%{value:,.0f}<extra></extra>'
-  }], { ...layoutBase(), margin:{t:4,r:4,l:4,b:4}, showlegend:true,
-        legend:{ orientation:'v', font:{size:9.5}, x:1, y:0.5 } },
+  }], { ...layoutBase(), margin:{t:2,r:2,l:2,b:2}, showlegend:true,
+        legend:{ orientation:'v', font:{size:8.5}, x:1, y:0.5 } },
     { responsive:true, displayModeBar:false });
 
-  // Distance scatter
-  const validDist = d.countries.filter(c => c.distance!=null && c.value!=null && c.value>0);
+  const validDist = d.countries.filter(c => c.distance!=null && valOf(c)!=null && valOf(c)>0);
   Plotly.newPlot('chart-distance', [{
-    x: validDist.map(c=>c.distance), y: validDist.map(c=>c.value), text: validDist.map(c=>c.country),
+    x: validDist.map(c=>c.distance), y: validDist.map(c=>valOf(c)), text: validDist.map(c=>c.country),
     mode:'markers', type:'scatter',
-    marker:{ color:'#E88DA0', size:7, opacity:0.75, line:{width:0.5,color:'#C96B80'} },
+    marker:{ color:'#E63E68', size:6.5, opacity:0.8, line:{width:0.5,color:'#B32950'} },
     hovertemplate:'%{text}<br>Distance: %{x:,.0f} km<br>Value: $%{y:,.0f}<extra></extra>'
   }], { ...layoutBase(), yaxis:{ title:'Exported (US$)', type:'log', tickformat:'$,.0s' },
-        xaxis:{ title:'Distance to Ecuador (km)' } }, { responsive:true, displayModeBar:false });
+        xaxis:{ title:'Distance (km)' } }, { responsive:true, displayModeBar:false });
 
-  // GDP scatter
-  const validGdp = d.countries.filter(c => c.gdp!=null && c.value!=null && c.value>0);
+  const validGdp = d.countries.filter(c => c.gdp!=null && valOf(c)!=null && valOf(c)>0);
   Plotly.newPlot('chart-gdp', [{
-    x: validGdp.map(c=>c.gdp), y: validGdp.map(c=>c.value), text: validGdp.map(c=>c.country),
+    x: validGdp.map(c=>c.gdp), y: validGdp.map(c=>valOf(c)), text: validGdp.map(c=>c.country),
     mode:'markers', type:'scatter',
-    marker:{ color:'#5FA8A0', size:7, opacity:0.75, line:{width:0.5,color:'#3E7A73'} },
+    marker:{ color:'#1FA398', size:6.5, opacity:0.8, line:{width:0.5,color:'#137268'} },
     hovertemplate:'%{text}<br>GDP: $%{x:,.0f}<br>Value: $%{y:,.0f}<extra></extra>'
   }], { ...layoutBase(), yaxis:{ title:'Exported (US$)', type:'log', tickformat:'$,.0s' },
         xaxis:{ title:'Importer GDP (US$)', type:'log', tickformat:'$,.0s' } }, { responsive:true, displayModeBar:false });
@@ -328,7 +413,7 @@ function renderDash(code){
 function initMap(code, d){
   const mapCountries = d.countries.filter(c => c.iso3);
   function mapValues(yearIdx){
-    return mapCountries.map(c => yearIdx===0 ? (c.value||0) : (c.series[yearIdx-1]||0));
+    return mapCountries.map(c => yearIdx===0 ? (valOf(c)||0) : (seriesOf(c)[yearIdx-1]||0));
   }
   function drawMap(yearIdx){
     const vals = mapValues(yearIdx);
@@ -340,7 +425,7 @@ function initMap(code, d){
       text: mapCountries.map((c,i)=> c.country+'<br>'+fmtUSD(vals[i])),
       customdata: mapCountries.map(c=>c.iso3),
       hovertemplate:'%{text}<extra></extra>',
-      colorscale:[[0,'#EEF1F5'],[0.35,'#F3D2DB'],[0.65,'#E88DA0'],[1,'#5FA8A0']],
+      colorscale:[[0,'#EEF1F5'],[0.35,'#F5C4D4'],[0.65,'#E63E68'],[1,'#137268']],
       showscale:false, marker:{ line:{ color:'#fff', width:0.4 } }
     }], {
       ...layoutBase(), margin:{t:0,r:0,l:0,b:0},
@@ -365,18 +450,18 @@ function initMap(code, d){
       <h3>${c.country}</h3>
       <div class="ctag">${EN[c.continent]||c.continent}</div>
       ${badge}
-      <div class="drow"><span class="k">Total exported 08–24</span><span class="v">${fmtUSD(c.value)}</span></div>
+      <div class="drow"><span class="k">Total exported 08–24</span><span class="v">${fmtUSD(valOf(c))}</span></div>
       <div class="drow"><span class="k">Distance</span><span class="v">${c.distance? c.distance.toLocaleString('en')+' km':'—'}</span></div>
       <div class="drow"><span class="k">GDP (latest)</span><span class="v">${fmtUSD(c.gdp)}</span></div>
       <div class="drow"><span class="k">Tariff today</span><span class="v">${tariffTxt}</span></div>
-      <div id="mini-trend" style="height:110px;margin-top:8px;"></div>
+      <div id="mini-trend" style="height:100px;margin-top:6px;"></div>
     `;
     Plotly.newPlot('mini-trend', [{
-      x: d.years, y: c.series, type:'scatter', mode:'lines+markers',
-      line:{ color:'#E88DA0', width:2 }, marker:{ size:3, color:'#5FA8A0' },
-      fill:'tozeroy', fillcolor:'rgba(232,141,160,0.12)',
+      x: d.years, y: seriesOf(c), type:'scatter', mode:'lines+markers',
+      line:{ color:'#E63E68', width:2 }, marker:{ size:3, color:'#1FA398' },
+      fill:'tozeroy', fillcolor:'rgba(230,62,104,0.12)',
       hovertemplate:'%{x}: $%{y:,.0f}<extra></extra>'
-    }], { ...layoutBase(), margin:{t:4,r:4,l:40,b:20}, yaxis:{ tickformat:'$,.0s' }, xaxis:{ dtick:6 } },
+    }], { ...layoutBase(), margin:{t:4,r:4,l:38,b:18}, yaxis:{ tickformat:'$,.0s' }, xaxis:{ dtick:6 } },
       { responsive:true, displayModeBar:false });
   }
   drawMap(0);
