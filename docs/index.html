@@ -25,20 +25,21 @@
     --line:#E4E1D3;
   }
   *{box-sizing:border-box;}
-  html, body{ height:100%; }
+  html, body{ height:100%; overflow:hidden; }
   body{
     margin:0; background:var(--bg); color:var(--ink);
     font-family:'Poppins',sans-serif; -webkit-font-smoothing:antialiased;
-    font-size:14px;
+    font-size:14px; display:flex; flex-direction:column;
   }
   .mono{ font-family:'IBM Plex Mono',monospace; }
-  #app:fullscreen{ background:var(--bg); overflow-y:auto; }
-  #app:-webkit-full-screen{ background:var(--bg); overflow-y:auto; }
+  #app{ display:flex; flex-direction:column; height:100vh; width:100%; }
+  #app:fullscreen{ background:var(--bg); }
+  #app:-webkit-full-screen{ background:var(--bg); }
 
   .topbar{
     background:var(--forest); color:#fff;
     padding:14px 24px; display:flex; align-items:center; justify-content:space-between;
-    flex-wrap:wrap; gap:12px;
+    flex-wrap:wrap; gap:12px; flex:0 0 auto;
     background-image: radial-gradient(circle at 8% 30%, rgba(229,23,123,0.18), transparent 45%),
                        radial-gradient(circle at 92% 70%, rgba(242,160,7,0.14), transparent 45%);
   }
@@ -81,7 +82,30 @@
   }
   .fs-btn:hover{ background:rgba(255,255,255,0.2); }
 
-  .dash{ padding:16px 20px 24px; max-width:1680px; margin:0 auto; }
+  .dash{ flex:1 1 auto; overflow:hidden; position:relative; }
+  .hscroll{
+    display:flex; flex-direction:row; height:100%; overflow-x:auto; overflow-y:hidden;
+    scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  }
+  .page{
+    flex:0 0 100%; min-width:100%; height:100%; overflow-y:auto; overflow-x:hidden;
+    scroll-snap-align:start; padding:16px 20px 20px; box-sizing:border-box;
+  }
+  .page-inner{ max-width:1680px; margin:0 auto; }
+  .navarrow{
+    position:fixed; top:calc(50% + 30px); transform:translateY(-50%); z-index:60;
+    width:42px; height:42px; border-radius:50%; border:none; cursor:pointer;
+    background:rgba(18,53,36,0.85); color:#fff; font-size:18px;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,0.25);
+    transition:.15s;
+  }
+  .navarrow:hover{ background:var(--fuchsia); }
+  .navarrow.left{ left:14px; }
+  .navarrow.right{ right:14px; }
+  .dotnav{ position:fixed; bottom:14px; left:50%; transform:translateX(-50%); z-index:60; display:flex; gap:8px; }
+  .dotnav .dot2{ width:9px; height:9px; border-radius:50%; background:rgba(18,53,36,0.25); cursor:pointer; transition:.15s; }
+  .dotnav .dot2.active{ background:var(--fuchsia); width:22px; border-radius:6px; }
+  .page-label{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
 
   .kpi-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:14px; }
   .kpi-card{
@@ -109,14 +133,16 @@
   .map-row p.desc{ font-size:12px; color:var(--muted); margin:0; }
   .agr-counts{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--muted); }
   .agr-counts b{ color:var(--forest); }
-  .map-body{ display:grid; grid-template-columns:1fr 260px; gap:14px; }
+  .map-body{ display:grid; grid-template-columns:1fr 240px; gap:14px; align-items:start; }
   #map-holder{ height:560px; border-radius:10px; overflow:hidden; cursor:pointer; }
   .detail-mini{
     background:var(--bg); border-radius:12px; padding:14px; font-size:12.5px;
-    display:flex; flex-direction:column; height:560px; overflow-y:auto;
+    display:flex; flex-direction:column; min-height:80px; max-height:560px; overflow-y:auto;
+    justify-content:center;
   }
+  .detail-mini.filled{ justify-content:flex-start; }
   .detail-mini .placeholder{
-    color:var(--muted); line-height:1.6; margin:auto; text-align:center; font-size:12px;
+    color:var(--muted); line-height:1.5; text-align:center; font-size:11px;
   }
   .detail-mini h3{ font-size:17px; margin:0 0 2px; color:var(--forest); }
   .detail-mini .ctag{ font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
@@ -129,7 +155,7 @@
   .badge.none{ background:#E4E1D3; color:var(--muted); }
 
   .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-  @media (max-width:1050px){ .grid{ grid-template-columns:1fr 1fr; } .map-body{ grid-template-columns:1fr; } #map-holder{height:420px;} .detail-mini{height:auto;} }
+  @media (max-width:1050px){ .grid{ grid-template-columns:1fr 1fr; } .map-body{ grid-template-columns:1fr; } #map-holder{height:420px;} .detail-mini{max-height:none;} }
   @media (max-width:640px){ .grid{ grid-template-columns:1fr; } .kpi-row{ grid-template-columns:1fr 1fr; } }
 
   .card{ background:var(--card); border-radius:14px; padding:15px 17px; box-shadow:0 2px 8px rgba(18,53,36,0.08); }
@@ -168,7 +194,7 @@
   .modal-charts.two{ grid-template-columns:1fr 1fr; }
   .modal-hint{ font-size:11.5px; color:var(--muted); margin-bottom:10px; }
 
-  footer{ padding:18px 20px 32px; font-size:10.5px; color:var(--muted); max-width:1680px; margin:0 auto; line-height:1.7; }
+  .foot-note{ font-size:9.5px; color:var(--muted); line-height:1.6; margin-top:16px; max-width:900px; }
 </style>
 </head>
 <body>
@@ -191,7 +217,12 @@
   </div>
 </div>
 
-<div class="dash" id="dash"></div>
+<div class="dash">
+  <div class="hscroll" id="hscroll"></div>
+</div>
+<button class="navarrow left" id="nav-left" onclick="gotoPage(-1)">‹</button>
+<button class="navarrow right" id="nav-right" onclick="gotoPage(1)">›</button>
+<div class="dotnav" id="dotnav"></div>
 
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
@@ -204,16 +235,9 @@
   </div>
 </div>
 
-<footer>
-  Source: UN Comtrade (via the user's Google Sheet), processed with native Excel formulas
-  (SUMIFS / VLOOKUP / CORREL), verified with headless LibreOffice. FTA/PTA status per country-year
-  from SICE-OAS and Ecuador's Ministry of Production, Foreign Trade and Investment. Inflation
-  adjustment uses U.S. CPI-U annual averages (BLS), rebased to 2024 dollars. Full-formula .xlsx
-  workbooks are in <code>/excel</code> of this repository.
-</footer>
-
 </div>
 <script>
+
 const CODE_ORDER = ["060311","060319","060312"];
 const COLORS = {
   "North America":"#E5177B","South America":"#F2A007","Europe":"#159B57",
@@ -368,78 +392,99 @@ function renderDash(code){
   const ptaCount = d.countries.filter(c=>c.pta===1).length;
   const noneCount = d.countries.length - ftaCount - ptaCount;
 
-  const dash = document.getElementById('dash');
-  dash.innerHTML = `
-    <div class="kpi-row">
-      <div class="kpi-card"><div class="kpi-ring" id="ring-total"></div>
-        <div class="kpi-text"><div class="label">Total Exported (${valLabel})</div><div class="big">${fmtUSD(total)} ${trendHtml}</div><div class="sub">${yearLabel} · ${fc.length} countries in view</div></div></div>
-      <div class="kpi-card"><div class="kpi-ring" id="ring-top"></div>
-        <div class="kpi-text"><div class="label">Top Buyer Share</div><div class="big">${top.country}</div><div class="sub">${fmtUSD(valOf(top))} · ${topShare}% of total</div></div></div>
-      <div class="kpi-card"><div class="kpi-ring" id="ring-dist"></div>
-        <div class="kpi-text"><div class="label">Distance Correlation</div><div class="big">${isNaN(cd)?'—':cd.toFixed(2)}</div><div class="sub">${distPct<20?'Distance barely matters':'Some relationship'}</div></div></div>
-      <div class="kpi-card"><div class="kpi-ring" id="ring-gdp"></div>
-        <div class="kpi-text"><div class="label">GDP Correlation</div><div class="big">${isNaN(cg)?'—':cg.toFixed(2)}</div><div class="sub">${gdpPct>50?'Buying power drives volume':'Moderate relationship'}</div></div></div>
-    </div>
+  const hscroll = document.getElementById('hscroll');
+  hscroll.innerHTML = `
+    <div class="page" id="page-1"><div class="page-inner">
+      <div class="page-label">Page 1 / 3 — Overview &amp; World Map</div>
+      <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-ring" id="ring-total"></div>
+          <div class="kpi-text"><div class="label">Total Exported (${valLabel})</div><div class="big">${fmtUSD(total)} ${trendHtml}</div><div class="sub">${yearLabel} · ${fc.length} countries in view</div></div></div>
+        <div class="kpi-card"><div class="kpi-ring" id="ring-top"></div>
+          <div class="kpi-text"><div class="label">Top Buyer Share</div><div class="big">${top.country}</div><div class="sub">${fmtUSD(valOf(top))} · ${topShare}% of total</div></div></div>
+        <div class="kpi-card"><div class="kpi-ring" id="ring-dist"></div>
+          <div class="kpi-text"><div class="label">Distance Correlation</div><div class="big">${isNaN(cd)?'—':cd.toFixed(2)}</div><div class="sub">${distPct<20?'Distance barely matters':'Some relationship'}</div></div></div>
+        <div class="kpi-card"><div class="kpi-ring" id="ring-gdp"></div>
+          <div class="kpi-text"><div class="label">GDP Correlation</div><div class="big">${isNaN(cg)?'—':cg.toFixed(2)}</div><div class="sub">${gdpPct>50?'Buying power drives volume':'Moderate relationship'}</div></div></div>
+      </div>
 
-    <div class="map-row">
-      <div class="mhead">
-        <div>
-          <h2><span class="dot"></span>Interactive World Map</h2>
-          <p class="desc">Click any country for its full profile. Use the Year filter above to isolate a single year, or the Agreement filter to show only FTA / PTA partners.</p>
+      <div class="map-row">
+        <div class="mhead">
+          <div>
+            <h2><span class="dot"></span>Interactive World Map</h2>
+            <p class="desc">Click any country for its full profile. Use the Year filter above to isolate a single year, or the Agreement filter to show only FTA / PTA partners.</p>
+          </div>
+          <div class="agr-counts">FTA: <b>${ftaCount}</b> &nbsp; PTA: <b>${ptaCount}</b> &nbsp; No agreement: <b>${noneCount}</b> &nbsp; (${d.countries.length} total)</div>
         </div>
-        <div class="agr-counts">FTA: <b>${ftaCount}</b> &nbsp; PTA: <b>${ptaCount}</b> &nbsp; No agreement: <b>${noneCount}</b> &nbsp; (${d.countries.length} total)</div>
-      </div>
-      <div class="map-body">
-        <div id="map-holder"></div>
-        <div class="detail-mini" id="detail-mini">
-          <div class="placeholder">Click a country on the map to see its export value, distance, GDP, FTA/PTA status and 2008–2024 trend here.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card span2">
-        <h2><span class="dot"></span>Total Purchases 2008–2024 — All Products Compared</h2>
-        <p class="desc">Roses vs. carnations vs. other flowers, year by year. Active product highlighted.</p>
-        <div id="chart-compare" style="height:230px;"></div>
-      </div>
-
-      <div class="card">
-        <h2><span class="dot"></span>What is this product?</h2>
-        <div class="info-body">
-          <div class="info-img">${info.img}</div>
-          <div class="info-text"><b>${info.title}</b><br>${info.text}</div>
+        <div class="map-body">
+          <div id="map-holder"></div>
+          <div class="detail-mini" id="detail-mini">
+            <div class="placeholder">Click a country on the map to see its profile here.</div>
+          </div>
         </div>
       </div>
+    </div></div>
 
-      <div class="card">
-        <h2><span class="dot"></span>Exports by Continent</h2>
-        <p class="desc">${yearLabel} · ${AGR_LABELS[AGREEMENT]}. Click to zoom.</p>
-        <div id="chart-continent" class="zoomable" style="height:210px;" onclick="pickChart('continent', this)"></div>
-        <div class="zoom-hint">click to zoom / compare</div>
+    <div class="page" id="page-2"><div class="page-inner">
+      <div class="page-label">Page 2 / 3 — Trends &amp; Product Profile</div>
+      <div class="grid">
+        <div class="card span2">
+          <h2><span class="dot"></span>Total Purchases 2008–2024 — All Products Compared</h2>
+          <p class="desc">Roses vs. carnations vs. other flowers, year by year. Active product highlighted.</p>
+          <div id="chart-compare" style="height:380px;"></div>
+        </div>
+        <div class="card">
+          <h2><span class="dot"></span>What is this product?</h2>
+          <div class="info-body">
+            <div class="info-img">${info.img}</div>
+            <div class="info-text"><b>${info.title}</b><br>${info.text}</div>
+          </div>
+        </div>
       </div>
+    </div></div>
 
-      <div class="card">
-        <h2><span class="dot"></span>Top Destination Countries</h2>
-        <p class="desc">${yearLabel} · ${AGR_LABELS[AGREEMENT]}.</p>
-        <div class="rank-list" id="rank-list"></div>
-      </div>
+    <div class="page" id="page-3"><div class="page-inner">
+      <div class="page-label">Page 3 / 3 — Deep Dive</div>
+      <div class="grid">
+        <div class="card">
+          <h2><span class="dot"></span>Exports by Continent</h2>
+          <p class="desc">${yearLabel} · ${AGR_LABELS[AGREEMENT]}. Click to zoom.</p>
+          <div id="chart-continent" class="zoomable" style="height:210px;" onclick="pickChart('continent', this)"></div>
+          <div class="zoom-hint">click to zoom / compare</div>
+        </div>
 
-      <div class="card">
-        <h2><span class="dot"></span>Value vs. Distance</h2>
-        <p class="desc">No clear slope = distance doesn't drive volume. Click to zoom.</p>
-        <div id="chart-distance" class="zoomable" style="height:200px;" onclick="pickChart('distance', this)"></div>
-        <div class="zoom-hint">click to zoom / compare</div>
-      </div>
+        <div class="card">
+          <h2><span class="dot"></span>Top Destination Countries</h2>
+          <p class="desc">${yearLabel} · ${AGR_LABELS[AGREEMENT]}.</p>
+          <div class="rank-list" id="rank-list"></div>
+        </div>
 
-      <div class="card">
-        <h2><span class="dot"></span>Value vs. Importer GDP</h2>
-        <p class="desc">A clear upward trend appears here. Click to zoom.</p>
-        <div id="chart-gdp" class="zoomable" style="height:200px;" onclick="pickChart('gdp', this)"></div>
-        <div class="zoom-hint">click to zoom / compare</div>
+        <div class="card">
+          <h2><span class="dot"></span>Value vs. Distance</h2>
+          <p class="desc">No clear slope = distance doesn't drive volume. Click to zoom.</p>
+          <div id="chart-distance" class="zoomable" style="height:200px;" onclick="pickChart('distance', this)"></div>
+          <div class="zoom-hint">click to zoom / compare</div>
+        </div>
+
+        <div class="card">
+          <h2><span class="dot"></span>Value vs. Importer GDP</h2>
+          <p class="desc">A clear upward trend appears here. Click to zoom.</p>
+          <div id="chart-gdp" class="zoomable" style="height:200px;" onclick="pickChart('gdp', this)"></div>
+          <div class="zoom-hint">click to zoom / compare</div>
+        </div>
+
+        <div class="card span2">
+          <div class="foot-note">
+            Source: UN Comtrade (via the user's Google Sheet), processed with native Excel formulas
+            (SUMIFS / VLOOKUP / CORREL), verified with headless LibreOffice. FTA/PTA status per
+            country-year from SICE-OAS and Ecuador's Ministry of Production, Foreign Trade and
+            Investment. Inflation adjustment uses U.S. CPI-U annual averages (BLS), rebased to 2024
+            dollars. Full-formula .xlsx workbooks are in <code>/excel</code> of this repository.
+          </div>
+        </div>
       </div>
-    </div>
+    </div></div>
   `;
+  setupPager();
 
   ring('ring-total', 100, '#E5177B');
   ring('ring-top', topShare, '#159B57');
@@ -578,6 +623,64 @@ function closeModal(){
 document.addEventListener('click', (e) => { if (e.target && e.target.id === 'modal-bg') closeModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
+// ---------- Horizontal pager ----------
+let PAGER_INIT = false, CURRENT_PAGE = 0;
+function setupPager(){
+  const hscroll = document.getElementById('hscroll');
+  const dotnav = document.getElementById('dotnav');
+  if (!PAGER_INIT){
+    PAGER_INIT = true;
+    dotnav.innerHTML = [0,1,2].map(i=>`<div class="dot2${i===0?' active':''}" onclick="gotoPage(${i},true)"></div>`).join('');
+    hscroll.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) >= Math.abs(e.deltaX)){
+        e.preventDefault();
+        hscroll.scrollLeft += e.deltaY;
+      }
+    }, { passive:false });
+    let scrollTimer;
+    hscroll.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const idx = Math.round(hscroll.scrollLeft / hscroll.clientWidth);
+        updateActivePage(idx);
+      }, 60);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('modal-bg').classList.contains('open')) return;
+      if (e.key === 'ArrowRight') gotoPage(1);
+      if (e.key === 'ArrowLeft') gotoPage(-1);
+    });
+    window.addEventListener('resize', () => {
+      hscroll.style.scrollBehavior = 'auto';
+      hscroll.scrollLeft = CURRENT_PAGE * hscroll.clientWidth;
+      requestAnimationFrame(() => { hscroll.style.scrollBehavior = 'smooth'; });
+    });
+  }
+  hscroll.style.scrollBehavior = 'auto';
+  hscroll.scrollLeft = CURRENT_PAGE * hscroll.clientWidth;
+  requestAnimationFrame(() => { hscroll.style.scrollBehavior = 'smooth'; });
+  updateActivePage(CURRENT_PAGE, false);
+}
+function updateActivePage(idx, setCurrent){
+  if (setCurrent === undefined) setCurrent = true;
+  idx = Math.max(0, Math.min(2, idx));
+  if (setCurrent) CURRENT_PAGE = idx;
+  document.querySelectorAll('.dotnav .dot2').forEach((el,i) => el.classList.toggle('active', i===idx));
+  const nl = document.getElementById('nav-left'), nr = document.getElementById('nav-right');
+  if (nl) nl.style.visibility = idx===0 ? 'hidden' : 'visible';
+  if (nr) nr.style.visibility = idx===2 ? 'hidden' : 'visible';
+}
+function gotoPage(deltaOrIdx, absolute){
+  const hscroll = document.getElementById('hscroll');
+  let target = absolute ? deltaOrIdx : CURRENT_PAGE + deltaOrIdx;
+  target = Math.max(0, Math.min(2, target));
+  CURRENT_PAGE = target;
+  hscroll.scrollLeft = target * hscroll.clientWidth;
+  updateActivePage(target);
+}
+
+
+
 function toggleFullscreen(){
   const el = document.getElementById('app');
   const isFs = document.fullscreenElement || document.webkitFullscreenElement;
@@ -624,6 +727,7 @@ function initMap(code, d){
   }
   function showDetail(c, d){
     const el = document.getElementById('detail-mini');
+    el.classList.add('filled');
     const badge = c.fta ? '<span class="badge fta">FTA active</span>' :
                   c.pta ? '<span class="badge pta">PTA active</span>' :
                   '<span class="badge none">No FTA/PTA</span>';

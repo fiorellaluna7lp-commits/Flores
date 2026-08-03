@@ -10,29 +10,37 @@ vigentes año a año.
 
 ## The interactive dashboard — "Bloom Atlas"
 
-Single-screen, horizontal BI-style layout (`docs/index.html`), in English, saturated
-tropical/floral palette (fuchsia, jungle green, marigold, violet on a deep forest-green header):
+A **horizontal-scrolling, 3-page experience** (`docs/index.html`) in a saturated tropical/floral
+palette (fuchsia, jungle green, marigold, violet on a deep forest header). Scroll the mouse wheel
+down (or drag/swipe) to move **right** through the pages — there's no vertical page scroll. Use
+the arrow buttons, the dot navigator (bottom-center), or the ← → keyboard arrows.
 
-- **Big interactive world map** — spans the full width at ~560px tall for easy country
-  selection. Click any country for its full profile (value, distance, GDP, FTA/PTA status +
-  source note, mini trend line 2008–2024).
-- **Year filter** (top bar dropdown) — isolate the whole dashboard (map, KPIs, charts, rankings)
-  to a single year, or view "All years 2008–24" accumulated.
-- **Agreement filter** — show only countries with an **FTA**, only **PTA**, **no agreement**, or
-  all — the map and every chart update to match, with live counts (FTA / PTA / none) shown above
-  the map.
+**Page 1 — Overview & World Map**
+- KPI ring row (total exported, top buyer, distance/GDP correlation, with a growth-trend arrow).
+- A big clickable world map (560px tall, full width) — click a country for its full profile in a
+  compact side panel (value, distance, GDP, FTA/PTA status + source note, mini trend line). The
+  panel stays small when empty instead of a big blank box.
+- **Agreement filter** (top bar) — show only countries with an active FTA, only PTA, only
+  "no agreement", or all.
+- **Year filter** (top bar dropdown) — isolate the whole dashboard to a single year, or view all
+  years accumulated.
+
+**Page 2 — Trends & Product Profile**
+- **Total Purchases 2008–2024 — All Products Compared**: all 3 products' yearly export value
+  overlaid on one chart, active product highlighted.
+- **"What is this product?"** — description + illustration for the selected tariff code.
+
+**Page 3 — Deep Dive**
+- Continent donut, distance scatter, GDP scatter (click any to zoom; pick a 2nd chart to compare
+  side by side in a modal).
+- Top destination countries ranked list, tagged FTA/PTA.
+- Source note.
+
+**Other controls (top bar, always visible)**
+- **Fullscreen button** — uses the browser's Fullscreen API so the address bar and browser chrome
+  are hidden while presenting.
 - **Nominal $ / Real (2024) $ toggle** — inflation-adjusts every KPI, chart and the map using
   U.S. CPI-U annual averages (BLS), rebased to 2024 dollars.
-- **Fullscreen mode** — the ⛶ button uses the browser's Fullscreen API so the dashboard fills the
-  entire screen with no browser chrome, ideal for presenting.
-- **Click-to-zoom charts** — click the continent donut or either scatter plot to open it enlarged
-  in a modal. Click a second chart while the modal is open and both appear **side by side**.
-- **Total Purchases 2008–2024 — All Products Compared** — full-width overlay line chart showing
-  roses vs. carnations vs. other flowers across the whole period, active product highlighted
-  (replaces the old top-countries pie chart).
-- **"What is this product?" card** — description + illustration for the selected tariff code.
-- **Top destination countries** ranked list, tagged FTA/PTA.
-- **Growth trend arrow** on the Total Exported KPI (only shown in "All years" view).
 
 Runs 100% client-side (Plotly.js via CDN, no backend) — works directly on GitHub Pages.
 
