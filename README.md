@@ -5,8 +5,8 @@ Análisis de las tres partidas florícolas de exportación de Ecuador — **rosa
 continente, distancia a Ecuador, PIB del país importador y acuerdos comerciales (FTA/PTA)
 vigentes año a año.
 
-**[→ Ver el dashboard interactivo](https://TU-USUARIO.github.io/TU-REPO/)**
-*(reemplaza el enlace una vez publiques con GitHub Pages — ver instrucciones abajo)*
+**[→ Ver el dashboard interactivo](https://fiorellaluna7lp-commits.github.io/ecuador-flores-export/)**
+*(se activa automaticamente 1-2 minutos despues de habilitar GitHub Pages — ver instrucciones abajo)*
 
 ## Qué responde este análisis
 
@@ -62,7 +62,7 @@ Edita cualquier celda azul en `Ref_Continente` o `Ref_Acuerdos` y todo el libro 
 ## Comandos para subirlo
 
 ```bash
-git remote add origin https://github.com/TU-USUARIO/TU-REPO.git
+git remote add origin https://github.com/fiorellaluna7lp-commits/ecuador-flores-export.git
 git branch -M main
 git push -u origin main
 ```
