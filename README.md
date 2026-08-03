@@ -8,23 +8,26 @@ vigentes año a año.
 **[→ Ver el dashboard interactivo](https://fiorellaluna7lp-commits.github.io/Flores/)**
 *(se activa automaticamente 1-2 minutos despues de habilitar GitHub Pages — ver instrucciones abajo)*
 
-## The interactive dashboard
+## The interactive dashboard — "Bloom Atlas"
 
-Single-screen, horizontal BI-style layout (`docs/index.html`), in English, saturated color palette:
+Single-screen, horizontal BI-style layout (`docs/index.html`), in English, saturated
+tropical/floral palette (fuchsia, jungle green, marigold, violet on a deep forest-green header):
 
-- **Top bar** — dark navy header with pill filters: 3 tariff codes (roses / carnations / other
-  flowers) **plus a Nominal $ / Real (2024) $ toggle** that inflation-adjusts every chart and KPI
+- **Big interactive world map** — now spans the full width at ~560px tall for much easier
+  country selection, with the detail panel alongside it. Click any country for its full profile
+  (value, distance, GDP, FTA/PTA status + source note, mini trend line 2008–2024). Drag the year
+  slider to animate the map, or leave it on "Total 08–24".
+- **Nominal $ / Real (2024) $ toggle** — inflation-adjusts every KPI, chart and the map itself
   using U.S. CPI-U annual averages (BLS), rebased to 2024 dollars.
-- **KPI ring row** — total exported, top buyer share, distance correlation, GDP correlation —
-  all react to the toggle above.
-- **Clickable world map** — click any country to open its profile (value, distance, GDP,
-  FTA/PTA status + source note, and a mini trend line 2008–2024) in the side panel.
-- **Year slider** — animate the map by year, or leave it on "Total 08–24" for the accumulated view.
-- **"What is this product?" card** — a short description and a simple illustration for whichever
-  tariff code is selected (roses / carnations / other flowers).
-- **Total Purchases 2008–2024 pie** — top 8 buyer countries + "Others".
-- **Continent donut**, **Top destination countries** ranked list, and two **scatter plots**
-  (distance, GDP) with log scales.
+- **Click-to-zoom charts** — click the purchases pie, continent donut, or either scatter plot to
+  open it enlarged in a modal. Click a second chart while the modal is open and both appear
+  **side by side** for direct comparison.
+- **"What is this product?" card** — description + a simple illustration for the selected
+  tariff code.
+- **Compare All 3 Products** — a full-width overlay line chart showing roses vs. carnations vs.
+  other flowers across the whole 2008–2024 period, with the active product highlighted.
+- **Growth trend arrow** on the Total Exported KPI (first 3-year average vs. last 3-year average).
+- **Top destination countries** ranked list.
 
 Runs 100% client-side (Plotly.js via CDN, no backend) — works directly on GitHub Pages.
 
