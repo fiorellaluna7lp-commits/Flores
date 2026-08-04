@@ -16,6 +16,9 @@ title banner scrolls away with the page, but the **filter bar stays pinned** (st
 as you scroll, so Product / Values / Year / Agreement / Fullscreen are always within reach.
 
 - **KPI ring row** — total exported, top buyer, distance/GDP correlation, with a growth-trend arrow.
+- **Product picker with an "All Products" option** — switch between roses / carnations / other
+  flowers, or select **All Products** to see the three tariff codes merged into one combined view
+  (map, KPIs, charts and correlations all recompute over the sum of the three).
 - **A big clickable world map** (640px tall, full width) — colored on a **single-hue scale**
   (light = low export value, deep fuchsia = high export value) instead of a multi-color scale, so
   it reads at a glance. **Hover** any country to see its export value and FTA/PTA status right in
@@ -34,6 +37,8 @@ as you scroll, so Product / Values / Year / Agreement / Fullscreen are always wi
 - Top destination countries ranked list, tagged FTA/PTA.
 - **QR code** in the last grid slot — scan to open the live dashboard on a phone; the whole page
   is mobile-responsive (cards stack, map and charts resize) so it works the same on a small screen.
+  On phones the filter bar collapses behind a single **⚙ Filters** button (with a small badge
+  showing any active Year/Agreement/Real-$ filter) instead of taking over the screen.
 - **Fullscreen button** — uses the browser's Fullscreen API so the address bar and browser chrome
   are hidden while presenting.
 - **Nominal $ / Real (2024) $ toggle** — inflation-adjusts every KPI, chart and the map using

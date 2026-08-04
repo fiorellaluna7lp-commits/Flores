@@ -64,6 +64,13 @@
   .filters{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
   .fgroup{ display:flex; align-items:center; gap:6px; }
   .fgroup .flabel{ font-size:10px; text-transform:uppercase; letter-spacing:.09em; color:#9FB6A5; margin-right:2px; }
+  .filter-toggle{
+    display:none; width:100%; font-family:'Poppins',sans-serif; font-size:13px; font-weight:600;
+    padding:9px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.08); color:#fff; cursor:pointer; text-align:left;
+    align-items:center; justify-content:space-between;
+  }
+  .filter-toggle-count{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--marigold); }
   .pill{
     font-family:'Poppins',sans-serif; font-size:12.5px; font-weight:500;
     padding:7px 15px; border-radius:18px; border:1px solid rgba(255,255,255,0.18);
@@ -141,8 +148,10 @@
     .grid{ grid-template-columns:1fr; }
     .kpi-row{ grid-template-columns:1fr; gap:10px; }
     .brandbar{ padding:12px 16px 8px; }
-    .filterbar{ flex-direction:column; align-items:flex-start; padding:10px 16px; }
-    .filters{ width:100%; flex-direction:column; align-items:flex-start; gap:10px; }
+    .filterbar{ flex-direction:column; align-items:stretch; padding:8px 16px; }
+    .filter-toggle{ display:flex; }
+    .filters{ width:100%; flex-direction:column; align-items:flex-start; gap:10px; max-height:0; overflow:hidden; margin-top:0; transition:max-height .2s ease; }
+    .filters.open{ max-height:600px; margin-top:10px; }
     .fgroup{ width:100%; flex-wrap:wrap; gap:8px; }
     .fgroup .flabel{ width:100%; margin-bottom:2px; }
     #filters-product, #filters-value, #filters-agr{ display:flex; flex-wrap:wrap; gap:6px; width:100%; }
@@ -212,7 +221,8 @@
 </div>
 
 <div class="filterbar">
-  <div class="filters">
+  <button class="filter-toggle" id="filter-toggle" onclick="toggleFilters()">⚙ Filters <span class="filter-toggle-count" id="filter-toggle-count"></span></button>
+  <div class="filters" id="filters-panel">
     <div class="fgroup"><span class="flabel">Product</span><span id="filters-product"></span></div>
     <div class="fgroup"><span class="flabel">Values</span><span id="filters-value"></span></div>
     <div class="fgroup"><span class="flabel">Year</span><select class="yr-select" id="year-select"></select></div>
@@ -272,6 +282,11 @@ const PRODUCT_INFO = {
     title: "Carnations",
     text: "Carnations (<i>Dianthus caryophyllus</i>) are a <b>lower-cost, long-lasting</b> cut flower widely used in ceremonies, everyday bouquets and mass-market floral arrangements. Ecuador exports them at a smaller scale than roses, mostly to Europe and Asia.",
     img: `<svg viewBox="0 0 100 100"><g fill="#F2A007"><circle cx="50" cy="36" r="22"/></g><g fill="#F7C458"><circle cx="42" cy="30" r="7"/><circle cx="58" cy="30" r="7"/><circle cx="50" cy="42" r="8"/><circle cx="38" cy="42" r="6"/><circle cx="62" cy="42" r="6"/></g><path d="M50 58 L50 92" stroke="#159B57" stroke-width="5" fill="none"/></svg>`
+  },
+  "ALL": {
+    title: "All Flower Products Combined",
+    text: "The three tariff codes together — <b>fresh roses, carnations, and other fresh flowers</b> — showing Ecuador's total cut-flower export footprint. Use this view to see the overall picture before drilling into a single product.",
+    img: `<svg viewBox="0 0 100 100"><circle cx="30" cy="42" r="17" fill="#E5177B"/><circle cx="30" cy="42" r="9" fill="#F2A0C2"/><circle cx="70" cy="42" r="15" fill="#F2A007"/><circle cx="70" cy="42" r="8" fill="#F7C458"/><circle cx="50" cy="24" r="13" fill="#1791C8"/><path d="M30 58 L30 92 M70 56 L70 92 M50 36 L50 92" stroke="#159B57" stroke-width="4" fill="none"/></svg>`
   }
 };
 
@@ -281,8 +296,14 @@ let PICKED = [];
 fetch('data.json').then(r => r.json()).then(d => {
   META = d._meta; delete d._meta;
   DATA = d;
+  buildCombined();
 
   const pf = document.getElementById('filters-product');
+  const allBtn = document.createElement('button');
+  allBtn.className = 'pill';
+  allBtn.textContent = 'All Products';
+  allBtn.onclick = () => selectProduct('ALL');
+  pf.appendChild(allBtn);
   CODE_ORDER.forEach((code,i) => {
     const b = document.createElement('button');
     b.className = 'pill' + (i===0 ? ' active':'');
@@ -362,7 +383,7 @@ function ring(elId, pct, color){
     { staticPlot:true });
 }
 
-function selectProduct(code){ ACTIVE_CODE = code; PICKED = []; syncPillGroup('filters-product', CODE_ORDER.indexOf(code)); renderDash(code); }
+function selectProduct(code){ ACTIVE_CODE = code; PICKED = []; syncPillGroup('filters-product', code==='ALL' ? 0 : CODE_ORDER.indexOf(code)+1); renderDash(code); }
 function selectValueMode(real){ USE_REAL = real; PICKED = []; syncPillGroup('filters-value', real?1:0); renderDash(ACTIVE_CODE); }
 function selectAgreement(key){ AGREEMENT = key; PICKED = []; syncPillGroup('filters-agr', ['all','fta','pta','none'].indexOf(key)); renderDash(ACTIVE_CODE); }
 function syncPillGroup(id, activeIdx){
@@ -503,6 +524,45 @@ function renderDash(code){
   drawCompare();
   drawAllCharts(code, fc, false);
   initMap(code, d);
+  updateFilterToggleCount();
+}
+
+function buildCombined(){
+  const base = DATA[CODE_ORDER[0]];
+  const years = base.years;
+  const continents = [...new Set(CODE_ORDER.flatMap(code => DATA[code].continents))];
+  const series = {}, series_real = {};
+  continents.forEach(cont => {
+    series[cont] = years.map((_,i) => CODE_ORDER.reduce((s,code) => s + ((DATA[code].series[cont]||[])[i]||0), 0));
+    series_real[cont] = years.map((_,i) => CODE_ORDER.reduce((s,code) => s + ((DATA[code].series_real[cont]||[])[i]||0), 0));
+  });
+
+  const map = {};
+  CODE_ORDER.forEach(code => {
+    DATA[code].countries.forEach(c => {
+      if (!map[c.country]){
+        map[c.country] = {
+          country: c.country, iso3: c.iso3, continent: c.continent,
+          fta: c.fta, pta: c.pta, tariff: c.tariff, note: c.note,
+          distance: c.distance, gdp: c.gdp,
+          value: 0, value_real: 0,
+          series: years.map(()=>0), series_real: years.map(()=>0)
+        };
+      }
+      const m = map[c.country];
+      m.value += (c.value||0);
+      m.value_real += (c.value_real||0);
+      (c.series||[]).forEach((v,i) => m.series[i] += (v||0));
+      (c.series_real||[]).forEach((v,i) => m.series_real[i] += (v||0));
+      if (m.distance==null && c.distance!=null) m.distance = c.distance;
+      if (m.gdp==null && c.gdp!=null) m.gdp = c.gdp;
+    });
+  });
+
+  DATA['ALL'] = {
+    label: 'All Products', years, continents, series, series_real,
+    countries: Object.values(map)
+  };
 }
 
 function pearson(xs, ys){
@@ -566,11 +626,12 @@ function drawAllCharts(code, fc, big){
 function drawCompare(){
   const traces = CODE_ORDER.map(code => {
     const d = DATA[code];
+    const hl = ACTIVE_CODE==='ALL' ? true : code===ACTIVE_CODE;
     return {
       x: d.years, y: totalByYear(d), name: LABEL_EN[d.label]||d.label, type:'scatter', mode:'lines+markers',
-      line:{ color: PRODUCT_COLOR[code], width: code===ACTIVE_CODE?3.5:2 },
-      opacity: code===ACTIVE_CODE?1:0.5,
-      marker:{ size: code===ACTIVE_CODE?6:4 },
+      line:{ color: PRODUCT_COLOR[code], width: hl?3.5:2 },
+      opacity: hl?1:0.5,
+      marker:{ size: hl?6:4 },
       hovertemplate:'%{x}: $%{y:,.0f}<extra></extra>'
     };
   });
@@ -616,6 +677,19 @@ function closeModal(){
 }
 document.addEventListener('click', (e) => { if (e.target && e.target.id === 'modal-bg') closeModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+function toggleFilters(){
+  document.getElementById('filters-panel').classList.toggle('open');
+}
+function updateFilterToggleCount(){
+  const el = document.getElementById('filter-toggle-count');
+  if (!el) return;
+  const bits = [];
+  if (YEAR_IDX !== 0) bits.push(DATA[ACTIVE_CODE].years[YEAR_IDX-1]);
+  if (AGREEMENT !== 'all') bits.push(AGR_LABELS[AGREEMENT]);
+  if (USE_REAL) bits.push('Real $');
+  el.textContent = bits.length ? '· ' + bits.join(' · ') : '';
+}
 
 function toggleFullscreen(){
   const el = document.getElementById('app');
