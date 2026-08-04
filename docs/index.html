@@ -493,7 +493,7 @@ function renderDash(code){
 
   drawCompare();
   drawAllCharts(code, fc);
-  initMap(code, d);
+  initMap(code, d, fc);
   updateFilterToggleCount();
 }
 
@@ -649,8 +649,8 @@ const MAP_COLORSCALE = [
   [1.0, '#6E0F3E']
 ];
 
-function initMap(code, d){
-  const mapCountries = CURRENT_FC.filter(c => c.iso3);
+function initMap(code, d, fc){
+  const mapCountries = fc.filter(c => c.iso3);
   function drawMap(){
     const vals = mapCountries.map(c => valOf(c)||0);
     const logVals = vals.map(v => v>0 ? Math.log10(v) : null);
