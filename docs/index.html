@@ -34,14 +34,20 @@
   #app:fullscreen{ background:var(--bg); overflow-y:auto; }
   #app:-webkit-full-screen{ background:var(--bg); overflow-y:auto; }
 
-  .topbar{
+  .brandbar{
     background:var(--forest); color:#fff;
-    padding:16px 26px; display:flex; align-items:center; justify-content:space-between;
-    flex-wrap:wrap; gap:14px;
+    padding:16px 26px 12px; display:flex; align-items:center;
     background-image: radial-gradient(circle at 8% 30%, rgba(229,23,123,0.18), transparent 45%),
                        radial-gradient(circle at 92% 70%, rgba(242,160,7,0.14), transparent 45%);
   }
-  .topbar .brand{ display:flex; align-items:center; gap:12px; }
+  .filterbar{
+    position:sticky; top:0; z-index:80;
+    background:var(--forest-2); color:#fff;
+    padding:10px 26px; display:flex; align-items:center; justify-content:flex-end;
+    flex-wrap:wrap; gap:14px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.18);
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
   .brand .icon{
     width:44px; height:44px; border-radius:50%;
     background:conic-gradient(from 180deg, var(--fuchsia), var(--marigold), var(--tropical), var(--violet), var(--fuchsia));
@@ -134,7 +140,8 @@
   @media (max-width:640px){
     .grid{ grid-template-columns:1fr; }
     .kpi-row{ grid-template-columns:1fr; gap:10px; }
-    .topbar{ flex-direction:column; align-items:flex-start; padding:14px 16px; }
+    .brandbar{ padding:12px 16px 8px; }
+    .filterbar{ flex-direction:column; align-items:flex-start; padding:10px 16px; }
     .filters{ width:100%; flex-direction:column; align-items:flex-start; gap:10px; }
     .fgroup{ width:100%; flex-wrap:wrap; gap:8px; }
     .fgroup .flabel{ width:100%; margin-bottom:2px; }
@@ -194,7 +201,7 @@
 <body>
 <div id="app">
 
-<div class="topbar">
+<div class="brandbar">
   <div class="brand">
     <div class="icon">🌺</div>
     <div>
@@ -202,6 +209,9 @@
       <p>Ecuador Flower Export Intelligence · HS 0603 · 2008–2024</p>
     </div>
   </div>
+</div>
+
+<div class="filterbar">
   <div class="filters">
     <div class="fgroup"><span class="flabel">Product</span><span id="filters-product"></span></div>
     <div class="fgroup"><span class="flabel">Values</span><span id="filters-value"></span></div>

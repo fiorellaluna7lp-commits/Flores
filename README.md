@@ -11,7 +11,9 @@ vigentes año a año.
 ## The interactive dashboard — "Bloom Atlas"
 
 A single, big **vertical-scrolling page** (`docs/index.html`) in a saturated tropical/floral
-palette (fuchsia, jungle green, marigold, violet on a deep forest header).
+palette (fuchsia, jungle green, marigold, violet on a deep forest header). The **Bloom Atlas**
+title banner scrolls away with the page, but the **filter bar stays pinned** (sticky) at the top
+as you scroll, so Product / Values / Year / Agreement / Fullscreen are always within reach.
 
 - **KPI ring row** — total exported, top buyer, distance/GDP correlation, with a growth-trend arrow.
 - **A big clickable world map** (640px tall, full width) — colored on a **single-hue scale**
