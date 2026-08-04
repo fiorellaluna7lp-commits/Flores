@@ -189,21 +189,6 @@
   .rank-item .val{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--forest); width:54px; text-align:right; }
   .rank-item .agrtag{ font-size:9px; padding:2px 7px; border-radius:8px; font-family:'IBM Plex Mono',monospace; }
 
-  .zoomable{ cursor:zoom-in; position:relative; border-radius:8px; transition:.15s; }
-  .zoomable:hover{ outline:2px solid var(--fuchsia); outline-offset:2px; }
-  .zoomable.picked{ outline:2px solid var(--tropical); outline-offset:2px; background:rgba(21,155,87,0.06); }
-  .zoom-hint{ font-size:10px; color:var(--muted); text-align:right; margin-top:4px; font-family:'IBM Plex Mono',monospace; }
-
-  .modal-bg{ display:none; position:fixed; inset:0; background:rgba(18,53,36,0.55); z-index:100; align-items:center; justify-content:center; padding:30px; backdrop-filter:blur(2px); }
-  .modal-bg.open{ display:flex; }
-  .modal{ background:var(--card); border-radius:16px; padding:22px 26px; max-width:1400px; width:100%; max-height:88vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.35); }
-  .modal .mtop{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
-  .modal .mtop h3{ font-size:16px; color:var(--forest); margin:0; }
-  .modal .mclose{ background:var(--forest); color:#fff; border:none; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:12.5px; font-family:'Poppins',sans-serif; }
-  .modal-charts{ display:grid; grid-template-columns:1fr; gap:16px; }
-  .modal-charts.two{ grid-template-columns:1fr 1fr; }
-  .modal-hint{ font-size:11.5px; color:var(--muted); margin-bottom:10px; }
-
   .foot-note{ padding:20px 26px 40px; font-size:11px; color:var(--muted); max-width:1760px; margin:0 auto; line-height:1.7; }
 </style>
 </head>
@@ -232,17 +217,6 @@
 </div>
 
 <div class="dash" id="dash"></div>
-
-<div class="modal-bg" id="modal-bg">
-  <div class="modal">
-    <div class="mtop">
-      <h3 id="modal-title">Chart detail</h3>
-      <button class="mclose" onclick="closeModal()">Close ✕</button>
-    </div>
-    <div class="modal-hint" id="modal-hint"></div>
-    <div class="modal-charts" id="modal-charts"></div>
-  </div>
-</div>
 
 <div class="foot-note">
   Source: UN Comtrade (via the user's Google Sheet), processed with native Excel formulas
@@ -291,7 +265,6 @@ const PRODUCT_INFO = {
 };
 
 let DATA = null, META = null, ACTIVE_CODE = null, USE_REAL = false, YEAR_IDX = 0, AGREEMENT = 'all';
-let PICKED = [];
 
 fetch('data.json').then(r => r.json()).then(d => {
   META = d._meta; delete d._meta;
@@ -383,9 +356,9 @@ function ring(elId, pct, color){
     { staticPlot:true });
 }
 
-function selectProduct(code){ ACTIVE_CODE = code; PICKED = []; syncPillGroup('filters-product', code==='ALL' ? 0 : CODE_ORDER.indexOf(code)+1); renderDash(code); }
-function selectValueMode(real){ USE_REAL = real; PICKED = []; syncPillGroup('filters-value', real?1:0); renderDash(ACTIVE_CODE); }
-function selectAgreement(key){ AGREEMENT = key; PICKED = []; syncPillGroup('filters-agr', ['all','fta','pta','none'].indexOf(key)); renderDash(ACTIVE_CODE); }
+function selectProduct(code){ ACTIVE_CODE = code; syncPillGroup('filters-product', code==='ALL' ? 0 : CODE_ORDER.indexOf(code)+1); renderDash(code); }
+function selectValueMode(real){ USE_REAL = real; syncPillGroup('filters-value', real?1:0); renderDash(ACTIVE_CODE); }
+function selectAgreement(key){ AGREEMENT = key; syncPillGroup('filters-agr', ['all','fta','pta','none'].indexOf(key)); renderDash(ACTIVE_CODE); }
 function syncPillGroup(id, activeIdx){
   document.querySelectorAll('#'+id+' .pill').forEach((b,i)=> b.classList.toggle('active', i===activeIdx));
 }
@@ -466,9 +439,8 @@ function renderDash(code){
     <div class="grid">
       <div class="card">
         <h2><span class="dot"></span>Exports by Continent</h2>
-        <p class="desc">${yearLabel} · ${AGR_LABELS[AGREEMENT]}. Click to zoom.</p>
-        <div id="chart-continent" class="zoomable" style="height:230px;" onclick="pickChart('continent', this)"></div>
-        <div class="zoom-hint">click to zoom / compare</div>
+        <p class="desc">${yearLabel} · ${AGR_LABELS[AGREEMENT]}.</p>
+        <div id="chart-continent" style="height:230px;"></div>
       </div>
 
       <div class="card">
@@ -479,16 +451,14 @@ function renderDash(code){
 
       <div class="card">
         <h2><span class="dot"></span>Value vs. Distance</h2>
-        <p class="desc">No clear slope = distance doesn't drive volume. Click to zoom.</p>
-        <div id="chart-distance" class="zoomable" style="height:220px;" onclick="pickChart('distance', this)"></div>
-        <div class="zoom-hint">click to zoom / compare</div>
+        <p class="desc">No clear slope = distance doesn't drive volume.</p>
+        <div id="chart-distance" style="height:220px;"></div>
       </div>
 
       <div class="card span2">
         <h2><span class="dot"></span>Value vs. Importer GDP</h2>
-        <p class="desc">A clear upward trend appears here. Click to zoom.</p>
-        <div id="chart-gdp" class="zoomable" style="height:240px;" onclick="pickChart('gdp', this)"></div>
-        <div class="zoom-hint">click to zoom / compare</div>
+        <p class="desc">A clear upward trend appears here.</p>
+        <div id="chart-gdp" style="height:240px;"></div>
       </div>
 
       <div class="card" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:10px;">
@@ -522,7 +492,7 @@ function renderDash(code){
   }).join('') || '<div class="placeholder" style="text-align:center;padding:20px 0;">No countries match this filter.</div>';
 
   drawCompare();
-  drawAllCharts(code, fc, false);
+  drawAllCharts(code, fc);
   initMap(code, d);
   updateFilterToggleCount();
 }
@@ -608,19 +578,17 @@ function gdpTrace(fc, big){
   }];
 }
 
-const CHART_DEFS = {
-  continent: { title:'Exports by Continent', trace: (d,big)=>continentTrace(CURRENT_FC,d,big), layout:(big)=>({ ...layoutBase(big), showlegend:true, legend:{orientation:'v', x:1, y:0.5, font:{size:big?12:9}} }) },
-  distance: { title:'Value vs. Distance', trace: (d,big)=>distanceTrace(CURRENT_FC,big), layout:(big)=>({ ...layoutBase(big), yaxis:{title:'Exported (US$)', type:'log', tickformat:'$,.0s'}, xaxis:{title:'Distance (km)'} }) },
-  gdp: { title:'Value vs. Importer GDP', trace: (d,big)=>gdpTrace(CURRENT_FC,big), layout:(big)=>({ ...layoutBase(big), yaxis:{title:'Exported (US$)', type:'log', tickformat:'$,.0s'}, xaxis:{title:'Importer GDP (US$)', type:'log', tickformat:'$,.0s'} }) },
-};
-let CURRENT_FC = [];
-
-function drawAllCharts(code, fc, big){
-  CURRENT_FC = fc;
+function drawAllCharts(code, fc){
   const d = DATA[code];
-  Plotly.newPlot('chart-continent', continentTrace(fc,d,big), { ...CHART_DEFS.continent.layout(big), margin:{t:2,r:2,l:2,b:2} }, {responsive:true, displayModeBar:false});
-  Plotly.newPlot('chart-distance', distanceTrace(fc,big), CHART_DEFS.distance.layout(big), {responsive:true, displayModeBar:false});
-  Plotly.newPlot('chart-gdp', gdpTrace(fc,big), CHART_DEFS.gdp.layout(big), {responsive:true, displayModeBar:false});
+  Plotly.newPlot('chart-continent', continentTrace(fc,d,false), {
+    ...layoutBase(false), showlegend:true, legend:{orientation:'v', x:1, y:0.5, font:{size:9}}, margin:{t:2,r:2,l:2,b:2}
+  }, {responsive:true, displayModeBar:false});
+  Plotly.newPlot('chart-distance', distanceTrace(fc,false), {
+    ...layoutBase(false), yaxis:{title:'Exported (US$)', type:'log', tickformat:'$,.0s'}, xaxis:{title:'Distance (km)'}
+  }, {responsive:true, displayModeBar:false});
+  Plotly.newPlot('chart-gdp', gdpTrace(fc,false), {
+    ...layoutBase(false), yaxis:{title:'Exported (US$)', type:'log', tickformat:'$,.0s'}, xaxis:{title:'Importer GDP (US$)', type:'log', tickformat:'$,.0s'}
+  }, {responsive:true, displayModeBar:false});
 }
 
 function drawCompare(){
@@ -640,43 +608,6 @@ function drawCompare(){
     yaxis:{ title:'Exported (US$)', tickformat:'$,.0s' }, xaxis:{ title:'Year', dtick:2 }
   }, { responsive:true, displayModeBar:false });
 }
-
-function pickChart(key, el){
-  const idx = PICKED.indexOf(key);
-  if (idx >= 0){ PICKED.splice(idx,1); el.classList.remove('picked'); }
-  else {
-    if (PICKED.length >= 2){
-      document.querySelectorAll('.zoomable.picked').forEach(x=>x.classList.remove('picked'));
-      PICKED = [];
-    }
-    PICKED.push(key); el.classList.add('picked');
-  }
-  if (PICKED.length === 1) openModal([PICKED[0]]);
-  else if (PICKED.length === 2) openModal(PICKED.slice());
-}
-function openModal(keys){
-  const d = DATA[ACTIVE_CODE];
-  const modalBg = document.getElementById('modal-bg');
-  document.getElementById('modal-title').textContent = keys.map(k=>CHART_DEFS[k].title).join('  ·  ');
-  document.getElementById('modal-hint').textContent = keys.length===1
-    ? 'Click another chart on the dashboard to compare it side by side with this one.'
-    : 'Comparing two charts side by side.';
-  const chartsEl = document.getElementById('modal-charts');
-  chartsEl.className = 'modal-charts' + (keys.length===2 ? ' two' : '');
-  chartsEl.innerHTML = keys.map(k => `<div><div style="font-size:13px;font-weight:600;color:#123524;margin-bottom:6px;">${CHART_DEFS[k].title}</div><div id="modal-chart-${k}" style="height:440px;"></div></div>`).join('');
-  modalBg.classList.add('open');
-  keys.forEach(k => {
-    const def = CHART_DEFS[k];
-    Plotly.newPlot('modal-chart-'+k, def.trace(d, true), def.layout(true), { responsive:true, displayModeBar:true });
-  });
-}
-function closeModal(){
-  document.getElementById('modal-bg').classList.remove('open');
-  document.querySelectorAll('.zoomable.picked').forEach(x=>x.classList.remove('picked'));
-  PICKED = [];
-}
-document.addEventListener('click', (e) => { if (e.target && e.target.id === 'modal-bg') closeModal(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
 function toggleFilters(){
   document.getElementById('filters-panel').classList.toggle('open');

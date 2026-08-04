@@ -32,8 +32,7 @@ as you scroll, so Product / Values / Year / Agreement / Fullscreen are always wi
 - **Total Purchases 2008–2024 — All Products Compared** — all 3 products' yearly export value
   overlaid on one chart, active product highlighted.
 - **"What is this product?"** — description + illustration for the selected tariff code.
-- Continent donut, distance scatter, GDP scatter (click any to zoom; pick a 2nd chart to compare
-  side by side in a modal).
+- Continent donut, distance scatter, GDP scatter.
 - Top destination countries ranked list, tagged FTA/PTA.
 - **QR code** in the last grid slot — scan to open the live dashboard on a phone; the whole page
   is mobile-responsive (cards stack, map and charts resize) so it works the same on a small screen.
